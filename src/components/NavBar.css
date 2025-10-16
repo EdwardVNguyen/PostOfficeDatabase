@@ -1,3 +1,26 @@
+.header-container {
+  display: flex;
+  background-color: #3C467B;
+  font-size: 15px;
+  position: fixed;
+  height: 7rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: height 500ms, background 500ms;
+ }
+
+ .header.tiny {
+   height: 70px;
+   background: #3C467B;
+   font-size: 10px;
+ }
+
+ .header.tiny .homeLogo {
+   height: 3rem;
+ }
+
 ul {
   list-style-type: none;
 }
@@ -5,7 +28,7 @@ ul {
 .homeLogo {
   height: 70px;
   width: 70px;
-  transition: all 0.2s ease-in-out;
+  transition: height 0.5s ease, transform 0.2s ease-in-out;
 }
 .homeLogo:hover {
   transform: scale(1.1);

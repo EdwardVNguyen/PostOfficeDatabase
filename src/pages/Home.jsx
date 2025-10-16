@@ -49,6 +49,12 @@ const Home = () => {
             </div>
           </div>
       </div>
+      <div className="section3">
+        TODO: How it works / process section
+      </div>
+      <div className="section4">
+        TODO: call to action section
+      </div>
     </>
   );
 };

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 document.body.style = "background: #FBFBFB";
 const root = createRoot(document.getElementById('root'));
+
 root.render(
   <StrictMode>
     <BrowserRouter>

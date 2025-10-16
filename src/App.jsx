@@ -12,7 +12,7 @@ import NavBar from './components/NavBar' ;
 const App = () => {
   return (
     <>
-      <header>
+      <header id="header">
         <NavBar />
       </header>
       

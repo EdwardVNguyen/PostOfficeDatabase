@@ -1,10 +1,25 @@
 import { NavLink } from "react-router-dom";
 import homeLogo from '../assets/homeLogo.svg';
 import './NavBar.css';
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
+  const [isTiny, setIsTiny] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsTiny(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <>
+    <header className={`header-container header  ${isTiny ? "tiny" : ""}`}>
       <nav>
         <ul>
           <li>
@@ -42,7 +57,7 @@ const NavBar = () => {
         </ul>
       </nav>
     </div>
-    </>
+    </header>
   );
 };
 

@@ -1,11 +1,5 @@
 main {
   padding-top: 80px;
 }
-header {
-  display: flex;
-  background-color: #3C467B;
-  font-size: 15px;
-  position: fixed;
-  width: 100%;
-}
+
 
