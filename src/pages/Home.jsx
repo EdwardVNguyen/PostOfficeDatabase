@@ -16,7 +16,7 @@ const Home = () => {
     <>
       <div className="section1"> 
         <div className="subSection1">
-          <b className="bigText"> With fast delivery times and affordable pricing, get ready to ship packages on the go with "Company Name."</b>
+          <b className="bigText"> With fast delivery times and affordable pricing, get ready to ship packages on the go with SnailMail.</b>
           <div className="line"/> 
           <small className="smallText"> Get a discounted price for every shipment.</small>
           <button onClick={handleClick}>
