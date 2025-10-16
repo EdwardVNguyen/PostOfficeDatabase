@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import homeLogo from '../assets/homeLogo.svg';
+import profileIcon from '../assets/profileIcon.svg'
 import './NavBar.css';
 import { useEffect, useState } from "react";
 
@@ -49,12 +50,12 @@ const NavBar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/signIn">Sign In</NavLink> 
+            <NavLink to="/loginorsignup" className="signInOrLogIn"> 
+              <span>Log In or Sign Up </span>
+              <img className="profileIcon" src={profileIcon} alt="Profile icon"/>
+            </NavLink> 
           </li>
-          <li>
-            <NavLink to="/signUp">Sign Up</NavLink> 
-          </li>
-        </ul>
+         </ul>
       </nav>
     </div>
     </header>

@@ -5,8 +5,7 @@ import Shipping from './pages/Shipping';
 import Tracking from './pages/Tracking';
 import About from './pages/About';
 import Support from './pages/Support';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
+import LoginOrSignUp from './pages/LogInOrSignUp';
 import NavBar from './components/NavBar' ;
 
 const App = () => {
@@ -23,8 +22,7 @@ const App = () => {
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/support" element={<Support/>} />
-          <Route path="/signIn" element={<SignIn/>} />
-          <Route path="/signUp" element={<SignUp/>} />
+          <Route path="/loginorsignup" element={<LoginOrSignUp/>} />
         </Routes>
       </main>
     </>
