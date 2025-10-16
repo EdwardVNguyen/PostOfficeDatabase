@@ -1,15 +1,21 @@
 import { NavLink } from "react-router-dom";
+import homeLogo from '../assets/homeLogo.svg';
 import './NavBar.css';
 
 const NavBar = () => {
   return (
-    <div className="navigation">
+    <>
       <nav>
         <ul>
           <li>
             {/* NavLink allows to navigate different routes using the "to" prop */}
-            <NavLink to="/" className={({ isActive}) => { return isActive ? "active-link" : ""; }}>Home</NavLink> 
+            <NavLink to="/" ><img className="homeLogo" src={homeLogo} alt="Home"/></NavLink> 
           </li>
+        </ul>
+      </nav>
+      <div class="navigation">
+      <nav>
+        <ul>
           <li>
             <NavLink to="/about">About</NavLink> 
           </li>
@@ -36,6 +42,7 @@ const NavBar = () => {
         </ul>
       </nav>
     </div>
+    </>
   );
 };
 

@@ -1,25 +1,36 @@
 .navigation {
   display: flex;
   width: 100%;
-  justify-content: space-between;
   padding-right: 50px;
+  justify-content: space-between;
+  align-items: center;
+}
+.navigation .homeLogo {
+  display: flex;
+  height: 70px;
+  width: 70px;
 }
 .navigation ul {
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  list-style-type: none;
+  gap: 30px;
 }
 .navigation ul li a {
-  color: #000;
+  color: #FBFBFB;
   text-decoration: none;
-
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.navigation ul li a:hover {
-  color: #00a8ff;
+.navigation nav ul .signUpOrIn {
+  border: solid red;
 }
 
-.navigation ul li a.active {
-  color: #00a8ff;
+.homeLogo {
+  height: 70px;
+  width: 70px;
+}
+
+ul {
+  list-style-type: none;
 }

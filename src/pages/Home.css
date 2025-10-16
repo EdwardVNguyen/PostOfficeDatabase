@@ -15,7 +15,7 @@
    font-size: 20px;
  }
  .section1 .subSection1 .line {
-   background-color: #C5BAFF;
+   background-color: #3C467B;
    height: 2px;
    border-radius: 4px;
    width: 15vw;
@@ -28,7 +28,7 @@
 
 /* From Uiverse.io by mrhyddenn */ 
 .section1 .subSection1 button {
-  background: #C5BAFF;
+  background: #636CCB;
   border: none;
   margin: 10px 0px;
   padding: 10px 20px;
@@ -54,7 +54,7 @@
   bottom: 0;
   right: 100%;
   left: 0;
-  background: rgb(20, 20, 20);
+  background: #3C467B;
   opacity: 0;
   z-index: -1;
   transition: all 0.5s;
@@ -77,6 +77,6 @@
 }
 
 .section2 {
-  background-color: #C5BAFF;
+  background-color: #3C467B;
 }
 
