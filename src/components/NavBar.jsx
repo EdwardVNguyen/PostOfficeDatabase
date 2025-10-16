@@ -13,7 +13,7 @@ const NavBar = () => {
           </li>
         </ul>
       </nav>
-      <div class="navigation">
+      <div className="navigation">
       <nav>
         <ul>
           <li>
