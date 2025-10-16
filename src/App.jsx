@@ -6,14 +6,13 @@ import Tracking from './pages/Tracking';
 import About from './pages/About';
 import Support from './pages/Support';
 import LoginOrSignUp from './pages/LogInOrSignUp';
-import NavBar from './components/NavBar' ;
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
     <>
-      <header id="header">
-        <NavBar />
-      </header>
+      <NavBar />
       
       <main>
         <Routes>
@@ -25,6 +24,8 @@ const App = () => {
           <Route path="/loginorsignup" element={<LoginOrSignUp/>} />
         </Routes>
       </main>
+
+      <Footer />
     </>
   );
 };

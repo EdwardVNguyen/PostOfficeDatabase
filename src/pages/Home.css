@@ -24,7 +24,7 @@
 
  .section1 .subSection1 .smallText {
    color: black; 
-   font-size: 0.8rem;
+   font-size: 0.9rem;
    font-weight: lighter;
  }
 
@@ -83,6 +83,7 @@
   flex-direction: column;
   background-color: #e6eef8;
   align-items: center;
+  width: 100%;
 }
 
 .section2 .bigText {

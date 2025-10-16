@@ -55,6 +55,9 @@ const Home = () => {
       <div className="section4">
         TODO: call to action section
       </div>
+      <div className="section5">
+        TODO: Frequently asked questions 
+      </div>
     </>
   );
 };
