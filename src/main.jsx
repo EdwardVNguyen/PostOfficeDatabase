@@ -5,7 +5,6 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 
 document.body.style = "background: #FBFBFB";
-document.body.style = "font-family: "
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
