@@ -1,0 +1,25 @@
+.navigation {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: 50px;
+}
+.navigation ul {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  list-style-type: none;
+}
+.navigation ul li a {
+  color: #000;
+  text-decoration: none;
+
+}
+
+.navigation ul li a:hover {
+  color: #00a8ff;
+}
+
+.navigation ul li a.active {
+  color: #00a8ff;
+}
