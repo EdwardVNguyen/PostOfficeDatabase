@@ -18,7 +18,7 @@ const Home = () => {
           <small className="smallText"> Get a discounted price for every shipment</small>
           <button onClick={handleClick}>
             <span>
-              Create a Free Account 
+              Create an Account 
             </span>
           </button>
         </div>
