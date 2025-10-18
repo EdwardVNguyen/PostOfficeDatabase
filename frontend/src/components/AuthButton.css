@@ -1,5 +1,6 @@
 /* From Uiverse.io by alexmaracinaru */ 
 .AuthButton {
+  margin-top: -0.75rem;
   cursor: pointer;
   font-weight: 700;
   transition: all 0.2s;
