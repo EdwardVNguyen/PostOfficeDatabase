@@ -1,21 +1,27 @@
 import connection from '../config/database.js';
 
+// Helper function to send JSON response
+const sendJSON = (res, statusCode, data) => {
+    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(data));
+};
+
 export const executeQuery = (req, res) => {
     const { query } = req.body;
 
     if (!query) {
-        return res.status(400).json({ error: 'No query provided' });
+        return sendJSON(res, 400, { error: 'No query provided' });
     }
 
     connection.query(query, (error, results) => {
         if (error) {
-            return res.status(400).json({
+            return sendJSON(res, 400, {
                 error: 'Query failed',
                 message: error.message
             });
         }
 
-        res.json({
+        sendJSON(res, 200, {
             success: true,
             data: results,
             query: query
@@ -24,7 +30,7 @@ export const executeQuery = (req, res) => {
 };
 
 export const testConnection = (req, res) => {
-    res.json({ message: 'Backend server is running!' });
+    sendJSON(res, 200, { message: 'Backend server is running!' });
 };
 
 export const getPackages = (req, res) => {
@@ -32,13 +38,13 @@ export const getPackages = (req, res) => {
 
     connection.query(query, (error, results) => {
         if (error) {
-            return res.status(500).json({
+            return sendJSON(res, 500, {
                 error: 'Failed to fetch packages',
                 message: error.message
             });
         }
 
-        res.json({
+        sendJSON(res, 200, {
             success: true,
             data: results
         });
