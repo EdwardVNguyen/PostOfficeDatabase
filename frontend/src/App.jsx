@@ -6,6 +6,7 @@ import Tracking from './pages/Tracking';
 import About from './pages/About';
 import Support from './pages/Support';
 import LoginOrSignUp from './pages/LogInOrSignUp';
+import TestQuery from './pages/TestQuery';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/about" element={<About/>} />
           <Route path="/support" element={<Support/>} />
           <Route path="/loginorsignup" element={<LoginOrSignUp/>} />
+          <Route path="/testquery" element={<TestQuery/>} />
         </Routes>
       </main>
 
