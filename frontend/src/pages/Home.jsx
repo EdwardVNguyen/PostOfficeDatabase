@@ -36,7 +36,7 @@ const Home = () => {
             <InfoCard 
               img={item1} 
               imgDescription="illustration of man moving package" 
-              title="Quick, easy Shipping" 
+              title="Quick, easy shipping" 
               paragraph="Send packages without the hassle. Fast, simple, and dependable from start to finish."
             />
             <InfoCard

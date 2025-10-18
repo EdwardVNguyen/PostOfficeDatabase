@@ -1,4 +1,5 @@
 import './InfoCard.css';
+
 const InfoCard = (props) => {
   return (
     <div className="card">
