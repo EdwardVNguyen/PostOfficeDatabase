@@ -1,0 +1,28 @@
+.form-container {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+button [type="submit"] {
+    max-width: fit-content;
+    margin: auto;
+}
+
+button [type="submit"]:hover {
+    cursor: grabbing;
+    
+}
+
+button [type="submit"]:focus {
+    cursor: grabbing;
+}
