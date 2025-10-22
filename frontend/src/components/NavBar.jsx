@@ -48,7 +48,7 @@ const NavBar = () => {
               <NavLink to="/testquery">Test Query</NavLink>
             </li>
             <li>
-              <NavLink to="/create-package">Create Package</NavLink>
+              <NavLink to="/createpackage">Create Package</NavLink>
             </li>
           </ul>
         </nav>
