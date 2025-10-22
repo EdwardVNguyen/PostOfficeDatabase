@@ -1,37 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import './create_package.css';
+import './CreatePackage.css';
 
-const create_package = () => {
-
-    // // package details
-    // const [weight, setWeight] = useState('');
-    // const [height, setHeight] = useState('');
-    // const [width, setWidth] = useState('');
-    // const [length, setLength] = useState('');
-    
-    // // sender details
-    // const [senderFName, setSenderFName] = useState('');
-    // const [senderLName, setSenderLName] = useState('');
-    // const [senderEmail, setSenderEmail] = useState('');
-    // const [senderPhone, setSenderPhone] = useState('');
-    // const [senderAddress, setSenderAddress] = useState('');
-    // const [senderCity, setSenderCity] = useState('');
-    // const [senderState, setSenderState] = useState('');
-    // const [senderZip, setSenderZip] = useState('');
-
-    // // receiver details
-    // const [receiverFName, setReceiverFName] = useState('');
-    // const [receiverLName, setReceiverLName] = useState('');
-    // const [receiverAddress, setReceiverAddress] = useState('');
-    // const [receiverCity, setReceiverCity] = useState('');
-    // const [receiverState, setReceiverState] = useState('');
-    // const [receiverZip, setReceiverZip] = useState('');
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    // };
-
+const CreatePackage = () => {
+    const handleSubmit = (e) => {
+         e.preventDefault();
+     };
     return (
         <>
             <div className="form-container">
@@ -91,4 +63,4 @@ const create_package = () => {
     );
 };
 
-export default create_package;
+export default CreatePackage;

@@ -9,7 +9,7 @@ import LoginOrSignUp from './pages/LogInOrSignUp';
 import TestQuery from './pages/TestQuery';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import CreatePackage from './pages/create_package';
+import CreatePackage from './pages/CreatePackage';
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/support" element={<Support/>} />
           <Route path="/loginorsignup" element={<LoginOrSignUp/>} />
           <Route path="/testquery" element={<TestQuery/>} />
-          <Route path="/create-package" element={<CreatePackage/>} />
+          <Route path="/createpackage" element={<CreatePackage/>} />
         </Routes>
       </main>
 
