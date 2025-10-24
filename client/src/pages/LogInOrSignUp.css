@@ -114,6 +114,9 @@
   min-width: 120px;
   max-width: 200px;
   box-sizing: border-box;
+  box-shadow: 2px 2px 5px 2px #ddd;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .signContainer .left .accountType .formInput .title {
@@ -134,16 +137,30 @@
   font-size: 15px;
  }
 
- .signContainer .left .accountType .formInput .desc {
-   color: #555;
-   font-size: 15px;
-   margin-top: 10px;
+.signContainer .left .accountType .formInput .desc {
+  color: #555;
+  font-size: 15px;
+  margin-top: 10px;
  }
 
- .signContainer .left .accountType .formInput:hover {
-   border: 1px solid #3C467B;
+.signContainer .left .accountType .formInput:hover {
+  border: 1px solid #636CCB;
  }
 
- .signContainer .left .accountType .formInput:has(input:checked) {
-   border: 2px solid #3C467B;
+.signContainer .left .accountType .formInput:has(input:checked) {
+  border: 1px solid #636CCB;
+  background: #636CCB;
  }
+.signContainer .left .accountType .formInput:has(input:checked) .title {
+  color: white;
+}
+.signContainer .left .accountType .formInput:has(input:checked) .price {
+  color: white;
+}
+.signContainer .left .accountType .formInput:has(input:checked) p{
+  color: white;
+}
+.signContainer .left .accountType .formInput:has(input:checked) .desc {
+  color: white;
+}
+
