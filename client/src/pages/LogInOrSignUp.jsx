@@ -88,10 +88,11 @@ const LogInOrSignUp = ( {setAuth} ) => {
     <div className="pageBackground">
     <div className="signContainer">
       <div className="left"> 
-        <b className="bigText"> Start shipping with confidence today</b>
-        <p className="description">SnailMail, a blazing fast delivery service</p>
         
         {mode === "Login" ? (
+          <>
+          <b className="bigText"> Start shipping with confidence today</b>
+          <p className="description">SnailMail, a blazing fast delivery service</p>
           <form className="signIn" onSubmit={handleLogin} >
             <AuthInput name="email" 
                        type="email" 
@@ -114,9 +115,13 @@ const LogInOrSignUp = ( {setAuth} ) => {
               <span className="click" onClick={()=>{switchMode("Signup")}}> click here </span> 
               to sign up! 
             </p>
-            <AuthButton text="Log In"/> 
+            <AuthButton text="Log In" type="submit"/> 
           </form>
+          </>
         ) : (
+          <>
+          <b className="bigText"> Ready to start your shipping journey?</b>
+          <p className="description"> "A journey of a thousand miles begins with a single step."</p>
           <form className="signUp" onSubmit={step === 3 ? handleSignUp : handleNext }>
             {step === 1 && (
               <> 
@@ -149,7 +154,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                   <span className="click" onClick={()=>{switchMode("Login")}}> click here </span>
                     to log in!
                  </p>
-              <AuthButton text="Continue" /> 
+              <AuthButton text="Continue" type="submit"/> 
               </>
             )}
             {step === 2 && (
@@ -186,11 +191,50 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        value={zipCode}
                        onChange={ (e) => setZipCode(e.target.value)}
                        />
-
-                <AuthButton text="Continue" /> 
+                 <p className="switch" /> 
+                <div className="goBack">
+                  <AuthButton text="Continue" type="submit"/> 
+                  <AuthButton text="Back" type="button" onClick={handleBack}/>
+                </div>
               </>
             )}
+          {step === 3 && (
+              <> 
+              <AuthInput type="text" 
+                       name="first-name"
+                       id="fname-1" 
+                       htmlFor="fname-1" 
+                       text="First Name" 
+                       value={firstName}
+                       onChange={ (e) => setFirstName(e.target.value)}
+                       />
+              <AuthInput type="text" 
+                       name="middle-name"
+                       id="mname-1" 
+                       htmlFor="mname-1" 
+                       text="Middle Name" 
+                       value={middleName}
+                       onChange={ (e) => setMiddleName(e.target.value)}
+                       />
+              <AuthInput type="text" 
+                       name="last-name"
+                       id="lname-1" 
+                       htmlFor="lname-1" 
+                       text="Last Name" 
+                       value={lastName}
+                       onChange={ (e) => setLastName(e.target.value)}
+                       />
+                <p className="switch" /> 
+                <div className="goBack">
+                  <AuthButton text="Sign Up" type="submit"/> 
+                  <AuthButton text="Back" type="button" onClick={handleBack}/>
+                </div>
+
+              </>
+            )}
+
           </form>
+          </>
         )}
       </div>
       <div className="middle" />
