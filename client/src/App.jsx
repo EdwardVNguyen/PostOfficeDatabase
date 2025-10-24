@@ -1,9 +1,10 @@
 import './App.css';
 import { Routes , Route } from 'react-router-dom';
-import { Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 
 import Home from './pages/Home';
 import LoginOrSignUp from './pages/LogInOrSignUp';
+import CustomerPage from './pages/CustomerPage'
 
 const Shipping = lazy( () => import('./pages/Shipping'));
 const Tracking = lazy( () => import('./pages/Tracking'));
@@ -12,8 +13,11 @@ const Support = lazy( () => import('./pages/Support'));
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
+  const [auth, setAuth] = useState(false);
+
   return (
     <>
       <NavBar />
@@ -21,12 +25,21 @@ const App = () => {
       <main>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
+          {/* non-protected routes */}
           <Route path="/" element={<Home />} />
           <Route path="/shipping" element={<Shipping/>} />
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/support" element={<Support/>} />
-          <Route path="/loginorsignup" element={<LoginOrSignUp/>} />
+
+          {/* login / signup page can set authentication status */}
+          <Route path="/loginorsignup" element={<LoginOrSignUp setAuth={setAuth}/>} /> 
+
+          {/* protected routes */}
+          <Route element={<PrivateRoutes auth={auth} />}>
+            <Route path='/customerPage' element={<CustomerPage/>} />
+          </Route>
+    
         </Routes>
       </Suspense>
       </main>

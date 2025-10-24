@@ -3,7 +3,7 @@ import './AuthButton.css'
 {/* From Uiverse.io by alexmaracinaru */} 
 const AuthButton = (props) => {
   return (
-    <button className="AuthButton">
+    <button type="submit" className="AuthButton">
       <span>{props.text}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"

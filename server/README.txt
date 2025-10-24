@@ -1,1 +1,1 @@
- to run server: node --env-file .env connect.js 
+ to run server: node --env-file .env server.js 

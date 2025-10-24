@@ -1,20 +1,13 @@
 import './LogInOrSignUp.css';
+
 import signUpImg from '../assets/signupImg.svg';
+
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/AuthButton';
+
 import { useState } from 'react';
+import { useNavigate} from 'react-router-dom'
 
-{/* 
-function handleLogin(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const emailQuery = formData.get("email");
-    const passwordQuery = formData.get("password");
-
-    alert(`You searched for ${emailQuery} and ${passwordQuery}`);
-  }
-
-*/}
 function handleSignUp(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -24,11 +17,38 @@ function handleSignUp(e) {
     alert(`You searched for ${emailQuery} and ${passwordQuery} and ${phoneQuery}`);
   }
 
-const LogInOrSignUp = () => {
+const LogInOrSignUp = ( {setAuth} ) => {
   const [mode, switchMode] = useState("Login"); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const navigate = useNavigate();
+
+  // function to handle user login, checks if email and password exist in the database
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // get email and password from form
+    const formData = new FormData(e.target);
+    const email = formData.get('email');
+    const password = formData.get('password')
+
+    // response - sends a GET request to server code, server code returns an JSON object {success: true/false message: 'message here'}
+    // data - convert json code into javascript object
+    const response = await fetch(`http://localhost:8000/login?email=${email}&password=${password}`);
+    const data = await response.json(); 
+
+
+    // navigate to home page if success, alert about wrong credentials otherwise
+    if (data.success) {
+      console.log(data);
+      setAuth(true);
+      navigate('/customerPage');
+    } else {
+      alert('Invalid email or password.');
+    }
+  };
    
   return (
     <div className="signContainer">
@@ -37,7 +57,7 @@ const LogInOrSignUp = () => {
         <p className="description">SnailMail, a blazing fast delivery service</p>
         
         {mode === "Login" ? (
-          <form className="signIn" action="/login" method="GET" >
+          <form className="signIn" onSubmit={handleLogin} >
             <AuthInput name="email" 
                        type="email" 
                        id="email-1" 
