@@ -19,11 +19,43 @@ function handleSignUp(e) {
 
 const LogInOrSignUp = ( {setAuth} ) => {
   const [mode, switchMode] = useState("Login"); 
+  const [step, setStep] = useState(1)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const navigate = useNavigate();
+
+  // on sign up, go to next slide
+  const handleNext = (e) => {
+    e.preventDefault();
+    setStep(step + 1);
+  };
+
+  // on sign up, go back if user wants to make changes
+  const handleBack = (e) => {
+    e.preventDefault();
+    setStep(step - 1);
+  }
+
+  // submits all user details and user signs up into system
+  const handleSignUp = (e) => {
+    e.preventDefault();
+
+    console.log({
+      email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName
+    });
+  };
 
   // function to handle user login, checks if email and password exist in the database
   const handleLogin = async (e) => {
@@ -53,6 +85,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
   };
    
   return (
+    <div className="pageBackground">
     <div className="signContainer">
       <div className="left"> 
         <b className="bigText"> Start shipping with confidence today</b>
@@ -63,7 +96,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
             <AuthInput name="email" 
                        type="email" 
                        id="email-1" 
-                       htmlFor="email" 
+                       htmlFor="email-1" 
                        text="Email" 
                        value={email} 
                        onChange={ ((e) => setEmail(e.target.value))}
@@ -71,7 +104,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
             <AuthInput name="password" 
                        type="password" 
                        id="password-1" 
-                       htmlFor="password" 
+                       htmlFor="password-1" 
                        text="Password" 
                        maxLength="100" 
                        value={password}
@@ -84,43 +117,87 @@ const LogInOrSignUp = ( {setAuth} ) => {
             <AuthButton text="Log In"/> 
           </form>
         ) : (
-          <form className="signUp" onSubmit={handleSignUp}>
-            <AuthInput name="email" 
+          <form className="signUp" onSubmit={step === 3 ? handleSignUp : handleNext }>
+            {step === 1 && (
+              <> 
+              <AuthInput name="email" 
                        type="email" 
                        id="email-2" 
-                       htmlFor="email" 
+                       htmlFor="email-2" 
                        text="Email" 
                        value={email}
                        onChange={ ((e) => setEmail(e.target.value))} 
                        />
-            <AuthInput name="password" 
+              <AuthInput name="password" 
                        type="password" 
                        id="password-2" 
-                       htmlFor="password" 
+                       htmlFor="password-2" 
                        text="Password" 
                        maxLength="100"
                        value={password}
                        onChange={ (e) => setPassword(e.target.value)}
                        />
-            <AuthInput type="tel" 
+              <AuthInput type="tel" 
                        name="phone"
                        id="phone-1" 
-                       htmlFor="phone" 
+                       htmlFor="phone-1" 
                        text="Phone Number" 
                        value={phoneNumber}
                        onChange={ (e) => setPhoneNumber(e.target.value)}
                        />
-            <p className="switch"> Already have an account,
-              <span className="click" onClick={()=>{switchMode("Login")}}> click here </span>
-              to log in!
-            </p>
-           <AuthButton text="Sign Up" /> 
+                <p className="switch"> Already have an account,
+                  <span className="click" onClick={()=>{switchMode("Login")}}> click here </span>
+                    to log in!
+                 </p>
+              <AuthButton text="Continue" /> 
+              </>
+            )}
+            {step === 2 && (
+              <> 
+              <AuthInput type="text" 
+                       name="street-address"
+                       id="street-1" 
+                       htmlFor="street-1" 
+                       text="Street Name" 
+                       value={street}
+                       onChange={ (e) => setStreet(e.target.value)}
+                       />
+              <AuthInput type="text" 
+                       name="city-address"
+                       id="city-1" 
+                       htmlFor="city-1" 
+                       text="City Name" 
+                       value={city}
+                       onChange={ (e) => setCity(e.target.value)}
+                       />
+              <AuthInput type="text" 
+                       name="state-address"
+                       id="state-1" 
+                       htmlFor="state-1" 
+                       text="State" 
+                       value={state}
+                       onChange={ (e) => setState(e.target.value)}
+                       />
+              <AuthInput type="text" 
+                       name="zipCode-address"
+                       id="zip-1" 
+                       htmlFor="zip-1" 
+                       text="ZIP Code" 
+                       value={zipCode}
+                       onChange={ (e) => setZipCode(e.target.value)}
+                       />
+
+                <AuthButton text="Continue" /> 
+              </>
+            )}
           </form>
         )}
       </div>
+      <div className="middle" />
       <div className="right">
         <img className="signUpImg" src={signUpImg} alt="image of Company Logo and man carrying packages"/>
       </div>
+    </div>
     </div>
   );
 };
