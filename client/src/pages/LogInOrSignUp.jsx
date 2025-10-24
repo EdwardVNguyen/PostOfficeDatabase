@@ -34,9 +34,13 @@ const LogInOrSignUp = ( {setAuth} ) => {
     const email = formData.get('email');
     const password = formData.get('password')
 
-    // response - sends a GET request to server code, server code returns an JSON object {success: true/false message: 'message here'}
+    // response - sends a POST request to server code, server code returns an JSON object {success: true/false message: 'message here'}
     // data - convert json code into javascript object
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/login?email=${email}&password=${password}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+                                   method: 'POST',
+                                   headers: {'Content-Type': 'application/json' }, 
+                                   body: JSON.stringify({email: `${email}`, password: `${password}` })
+                                  });
     const data = await response.json(); 
 
     // navigate to home page if success, alert about wrong credentials otherwise

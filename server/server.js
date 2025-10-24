@@ -1,16 +1,24 @@
 import http from 'node:http'
-import { handleGetRequestRoutes } from './routers/getRequestRoutes.js'
+import { handlePostRequest } from './routers/handlePostRequest.js'
 
 const PORT = 8000 
 
 const server = http.createServer( (req,res) => {
 
   res.setHeader('Access-Control-Allow-Origin','*')
-  res.setHeader('Access-Control-Allow-Methods','GET')
+  res.setHeader('Access-Control-Allow-Headers','Content-Type')
+  res.setHeader('Access-Control-Allow-Methods','*')
+
+  // handle preflight request
+  if (req.method === 'OPTIONS') {
+    res.statusCode = 204
+    res.end()
+    return
+  }
 
   try {
-    if (req.method === 'GET') {
-      handleGetRequestRoutes(req, res)
+    if (req.method === 'POST') {
+      handlePostRequest(req, res)
     } else {
       res.statusCode = 404
       res.end('Request method invalid')
