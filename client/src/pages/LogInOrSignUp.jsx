@@ -34,6 +34,9 @@ const LogInOrSignUp = ( {setAuth} ) => {
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const [accountType, setAccountType] = useState("");
+
+
   const navigate = useNavigate();
 
   // on sign up, go to next slide
@@ -53,7 +56,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
     e.preventDefault();
 
     console.log({
-      email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName
+      email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName,accountType
     });
   };
 
@@ -88,12 +91,13 @@ const LogInOrSignUp = ( {setAuth} ) => {
     <div className="pageBackground">
     <div className="signContainer">
       <div className="left"> 
-        
+       
+        {/* switches bewtween login and sign up depending on mode state, controlled by the span with className "click" */}
         {mode === "Login" ? (
           <>
           <b className="bigText"> Start shipping with confidence today</b>
           <p className="description">SnailMail, a blazing fast delivery service</p>
-          <form className="signIn" onSubmit={handleLogin} >
+          <form className="signIn" onSubmit={handleLogin} > {/* login form handles login authentication */}
             <AuthInput name="email" 
                        type="email" 
                        id="email-1" 
@@ -120,9 +124,11 @@ const LogInOrSignUp = ( {setAuth} ) => {
           </>
         ) : (
           <>
+          {/* Sign up page, user goes through 4 pages, inserting their info before submitting it all */}
+
           <b className="bigText"> Ready to start your shipping journey?</b>
           <p className="description"> "A journey of a thousand miles begins with a single step."</p>
-          <form className="signUp" onSubmit={step === 3 ? handleSignUp : handleNext }>
+          <form className="signUp" onSubmit={step === 4 ? handleSignUp : handleNext }>
             {step === 1 && (
               <> 
               <AuthInput name="email" 
@@ -193,8 +199,8 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        />
                  <p className="switch" /> 
                 <div className="goBack">
+                   <AuthButton text="Back" type="button" onClick={handleBack}/>
                   <AuthButton text="Continue" type="submit"/> 
-                  <AuthButton text="Back" type="button" onClick={handleBack}/>
                 </div>
               </>
             )}
@@ -226,12 +232,52 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        />
                 <p className="switch" /> 
                 <div className="goBack">
-                  <AuthButton text="Sign Up" type="submit"/> 
                   <AuthButton text="Back" type="button" onClick={handleBack}/>
+                  <AuthButton text="Continue " type="submit"/> 
                 </div>
-
               </>
             )}
+          {step === 4 && (
+            <>
+              {/* Credit to CodingFlag for custom radio input */}
+            <div className="accountType">
+              <div className="formInput">
+                <input type="radio" name="accountType" id="individual-acc" value="individual" onChange={ (e) => setAccountType(e.target.value)}/>
+                <label htmlFor="individual-acc" >
+                    <div className="title">Individual Account</div>
+                    <div className="price">Free</div>
+                    <p> Per Month</p>
+                    <div className="desc"> Perfect for personal use, giving you access to all basic features at no cost.</div>
+                </label>
+              </div>
+
+              <div className="formInput">
+                <input type="radio" name="accountType" id="prime-acc" value="prime" onChange={ (e) => setAccountType(e.target.value)}/>
+                <label htmlFor="prime-acc">
+                    <div className="title">Prime Account</div>
+                    <div className="price">$9.99</div>
+                    <p> Per Month</p>
+                    <div className="desc"> Enjoy enhanced features, priority support, and exclusive content for a low monthly fee.</div>
+                </label>
+              </div>
+
+              <div className="formInput">
+                <input type="radio" name="accountType" id="business-acc" value="business" onChange={ (e) => setAccountType(e.target.value)}/>
+                <label htmlFor="business-acc">
+                    <div className="title">Business Account</div>
+                    <div className="price">$24.99</div>
+                    <p> Per Month</p>
+                    <div className="desc"> Designed for teams and companies, offering advanced tools, analytics, and collaboration options.</div>
+                </label>
+                </div>
+            </div>
+
+              <div className="goBack">
+                <AuthButton text="Back" type="button" onClick={handleBack}/>
+                <AuthButton text="Sign up" type="submit"/> 
+              </div>
+            </>
+          )}
 
           </form>
           </>

@@ -3,6 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  min-height: 75vh;
   padding: 100px 0px;
   border-bottom: 2px solid #3C467B;
 }
@@ -12,12 +13,13 @@
   margin-bottom: 90px;
   display: flex;
   flex-direction: row;
-  width: 100%;
+  min-height: 50vh;
+  width: auto;
 }
 
 /* invisible line to seperate left and right section */
 .signContainer .middle {
-  width: 100px;
+  width: 10rem;
 }
 
 .signContainer .left {
@@ -25,11 +27,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
   background-color: white;
-  transform: translateX(-55px);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
 }
 
 .signContainer .left .bigText {
@@ -70,7 +73,11 @@
 }
 
 .signContainer .right {
-  flex: 1;
+  position: absolute;
+  right: 0;
+  width: 90vh;
+  height: auto;
+  
 }
 
 .signContainer .right .signUpImg {
@@ -84,6 +91,59 @@
   gap: 2rem;
 }
 
-.goBack button:nth-child(2) svg {
+.goBack button:nth-child(1) svg {
   transform: scaleX(-1); 
 }
+
+.signContainer .left .accountType {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.signContainer .left .accountType input {
+  display: none;
+}
+
+.signContainer .left .accountType .formInput {
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  text-align: center;
+  flex: 1;
+  padding: 10px;
+  min-width: 120px;
+  max-width: 200px;
+  box-sizing: border-box;
+}
+
+.signContainer .left .accountType .formInput .title {
+  font-size: 15px;
+  color: #3C467B;
+  font-weight: 600;
+}
+
+.signContainer .left .accountType .formInput .price {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0px 2px;
+  color: #222;
+}
+
+.signContainer .left .accountType .formInput p {
+  color: #888;
+  font-size: 15px;
+ }
+
+ .signContainer .left .accountType .formInput .desc {
+   color: #555;
+   font-size: 15px;
+   margin-top: 10px;
+ }
+
+ .signContainer .left .accountType .formInput:hover {
+   border: 1px solid #3C467B;
+ }
+
+ .signContainer .left .accountType .formInput:has(input:checked) {
+   border: 2px solid #3C467B;
+ }
