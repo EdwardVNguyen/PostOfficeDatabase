@@ -12,6 +12,7 @@ const About = lazy( () => import('./pages/About'));
 const Support = lazy( () => import('./pages/Support'));
 
 import NavBar from './components/NavBar';
+import AuthNavBar from './components/AuthNavBar';
 import Footer from './components/Footer';
 import PrivateRoutes from './components/PrivateRoutes';
 
@@ -20,7 +21,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
+      {auth ? <AuthNavBar /> : <NavBar />}
       
       <main>
       <Suspense fallback={<div>Loading...</div>}>
