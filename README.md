@@ -1,14 +1,13 @@
 # 🐌 SnailMail
 
-SnailMail is a full-stack web application built with **React**, **Node.js**, and **MySQL** that simulates a digital post office system.  
-Users can register, log in, manage addresses, send and track packages, and interact with a database-backed backend API.
+SnailMail is a full-stack web application built with **React**, **Node.js**, and **MySQL** that simulates a digital post office system.
 
 ---
 
 ## 🚀 Tech Stack
 
 **Frontend:** React (Vite)  
-**Backend:** Node.js (Express-style server)  
+**Backend:** Node.js  
 **Database:** MySQL  
 **Language:** JavaScript (ES Modules)
 
