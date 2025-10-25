@@ -80,6 +80,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
   const data = await response.json();
   if (data.success) {
     setAuth(true);
+    localStorage.setItem('auth','true')
     navigate('/customerPage');
   } else {
     alert('Something went wrong with user sign up');
@@ -102,6 +103,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
     // navigate to home page if success, alert about wrong credentials otherwise
     if (data.success) {
       setAuth(true);
+      localStorage.setItem('auth','true')
       navigate('/customerPage');
     } else {
       alert('Invalid email or password.');
