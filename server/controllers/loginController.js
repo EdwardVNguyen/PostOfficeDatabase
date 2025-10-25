@@ -1,20 +1,6 @@
-import connection from '../config/database.js';
-
-// help function to read JSON body from request
-const getRequestBody = async (req) => {
-  return new Promise((resolve, reject) => {
-    let body = ''
-    req.on('data', chunk => (body += chunk));
-    req.on('end', () => {
-      try {
-        resolve(JSON.parse(body))
-      } catch (err) {
-        reject(new Error('Invalid JSON'))
-      }
-    })
-    req.on('error', err => reject(err))
-  })
-}
+import connection from '../config/database.js'
+import { getRequestBody } from '../utils/getRequestBody.js'
+import { badClientRequest, badServerRequest } from '../utils/badRequest.js'
 
 // functionality for user login (customer, manager, employee)
 export const loginController = async (req, res) => {
@@ -27,9 +13,7 @@ export const loginController = async (req, res) => {
     email = body.email
     password = body.password
   } catch (err) {
-    res.statusCode = 400 // bad request from client
-    res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({success: false, message: err.message}))
+    badClientRequest(res, err)
     return
   }
   
@@ -42,12 +26,7 @@ export const loginController = async (req, res) => {
 
         // if something wrong happened with the database query itself
         if (error) {
-          res.statusCode = 500
-          res.setHeader('Content-Type','application/json')
-          res.end(JSON.stringify({ 
-            success: false, 
-            message: 'Database query failed'
-          }))
+          badServerRequest(res)
           return
         } 
 
