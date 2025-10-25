@@ -151,21 +151,25 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="Email" 
                        value={email}
                        onChange={ ((e) => setEmail(e.target.value))} 
+                       required={true}
                        />
               <AuthInput name="password" 
                        type="password" 
                        id="password-2" 
                        htmlFor="password-2" 
                        text="Password" 
-                       maxLength="100"
+                       maxLength={100}
                        value={password}
                        onChange={ (e) => setPassword(e.target.value)}
+                       required={true}
                        />
               <AuthInput type="tel" 
                        name="phone"
                        id="phone-1" 
                        htmlFor="phone-1" 
                        text="Phone Number" 
+                       maxLength={10}
+                       pattern="[0-9]*"
                        value={phoneNumber}
                        onChange={ (e) => setPhoneNumber(e.target.value)}
                        />
@@ -185,6 +189,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="Street Name" 
                        value={street}
                        onChange={ (e) => setStreet(e.target.value)}
+                       required={true}
                        />
               <AuthInput type="text" 
                        name="city-address"
@@ -193,6 +198,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="City Name" 
                        value={city}
                        onChange={ (e) => setCity(e.target.value)}
+                       required={true}
                        />
               <AuthInput type="text" 
                        name="state-address"
@@ -201,6 +207,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="State" 
                        value={state}
                        onChange={ (e) => setState(e.target.value)}
+                       required={true}
                        />
               <AuthInput type="text" 
                        name="zipCode-address"
@@ -209,6 +216,9 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="ZIP Code" 
                        value={zipCode}
                        onChange={ (e) => setZipCode(e.target.value)}
+                       required={true}
+                       maxLength={5}
+                       pattern="[0-9]*"
                        />
                  <p className="switch" /> 
                 <div className="goBack">
@@ -226,6 +236,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="First Name" 
                        value={firstName}
                        onChange={ (e) => setFirstName(e.target.value)}
+                       required={true}
                        />
               <AuthInput type="text" 
                        name="middle-name"
@@ -242,6 +253,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        text="Last Name" 
                        value={lastName}
                        onChange={ (e) => setLastName(e.target.value)}
+                       required={true}
                        />
                 <p className="switch" /> 
                 <div className="goBack">
@@ -255,7 +267,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
               {/* Credit to CodingFlag for custom radio input */}
             <div className="accountType">
               <label className="formInput" htmlFor='individual-acc'>
-                    <input type="radio" name="accountType" id="individual-acc" value="individual" onChange={ (e) => setAccountType(e.target.value)}/>
+                    <input type="radio" name="accountType" id="individual-acc" value="individual" onChange={ (e) => setAccountType(e.target.value)} required/>
                     <div className="title">Individual Account</div>
                     <div className="price">Free</div>
                     <p> Per Month</p>
