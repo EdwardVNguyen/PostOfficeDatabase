@@ -57,8 +57,6 @@ Example: http://domain_name.com
 ```
 ---
 
-## 🧠 Setup Instructions
-
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/EdwardVNguyen/SnailMail.git
