@@ -39,7 +39,7 @@ SnailMail/
 
 ## ⚙️ Environment Variables
 
-> ⚠️ Both `.env` files are **git ignored** to protect sensitive information.
+> ⚠️ Both `.env` files are **git ignored** to protect sensitive information. Therefore, you must manually create your own .env files on the client and server folders.
 
 ### Backend (`/server/.env`)
 ```
