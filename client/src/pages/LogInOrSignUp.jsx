@@ -167,8 +167,9 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        name="phone"
                        id="phone-1" 
                        htmlFor="phone-1" 
-                       text="Phone Number" 
+                       text="Phone Number - optional" 
                        maxLength={10}
+                       minLength={10}
                        pattern="[0-9]*"
                        value={phoneNumber}
                        onChange={ (e) => setPhoneNumber(e.target.value)}
@@ -205,8 +206,13 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        id="state-1" 
                        htmlFor="state-1" 
                        text="State" 
+                       maxLength={2}
+                       minLength={2}
+                       pattern="[A-Z]*"
                        value={state}
-                       onChange={ (e) => setState(e.target.value)}
+                       onChange={ (e) => setState(e.target.value.toUpperCase())}
+                       onInvalid={ (e) => e.target.setCustomValidity("Must be a valid 2 letter state code")}
+                       onInput={ (e) => e.target.setCustomValidity("")}
                        required={true}
                        />
               <AuthInput type="text" 
@@ -218,7 +224,10 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        onChange={ (e) => setZipCode(e.target.value)}
                        required={true}
                        maxLength={5}
+                       minLength={5}
                        pattern="[0-9]*"
+                       onInvalid={ (e) => e.target.setCustomValidity("Must be a valid 5 digit zip code")}
+                       onInput={ (e) => e.target.setCustomValidity("")}
                        />
                  <p className="switch" /> 
                 <div className="goBack">
@@ -242,7 +251,7 @@ const LogInOrSignUp = ( {setAuth} ) => {
                        name="middle-name"
                        id="mname-1" 
                        htmlFor="mname-1" 
-                       text="Middle Name" 
+                       text="Middle Name - optional" 
                        value={middleName}
                        onChange={ (e) => setMiddleName(e.target.value)}
                        />

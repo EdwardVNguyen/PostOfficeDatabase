@@ -10,9 +10,13 @@ const AuthInput = (props) => {
              autoComplete="off" 
              placeholder=" " 
              onChange={props.onChange} 
-             value={props.value ?? ""}
-             required
-             maxLength={props.maxlength}
+             onInvalid={props.onInvalid}
+             onInput={props.onInput}
+             value={props.value ?? ""} // return "" if props.value is null or undefined
+             required={props.required || false} // required is false by default
+             maxLength={props.maxLength}
+             minLength={props.minLength}
+             pattern={props.pattern}
       />
       <label htmlFor={props.htmlFor} className="form_label">{props.text}</label>
     </div>
