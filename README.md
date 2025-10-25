@@ -16,6 +16,7 @@ Users can register, log in, manage addresses, send and track packages, and inter
 
 ## 📁 Project Structure
 
+```
 SnailMail/
 ├── client/ # Frontend React application
 │ ├── src/
@@ -34,7 +35,7 @@ SnailMail/
 │ └── .env # Backend environment variables
 │
 └── README.md # Project documentation
-
+```
 ---
 
 ## ⚙️ Environment Variables
@@ -42,18 +43,19 @@ SnailMail/
 > ⚠️ Both `.env` files are **git ignored** to protect sensitive information.
 
 ### Backend (`/server/.env`)
-
+```
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=
 DB_NAME=postOfficeDatabase
-
+```
 ### Frontend (`/client/.env`)
-
+```
 VITE_API_URL=http://localhost:8000
 
 Example: http://domain_name.com
+```
 ---
 
 ## 🧠 Setup Instructions
