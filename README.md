@@ -46,7 +46,7 @@ SnailMail/
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=
+DB_PASSWORD=mySQLpassword
 DB_NAME=postOfficeDatabase
 ```
 ### Frontend (`/client/.env`)
