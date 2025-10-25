@@ -2,11 +2,17 @@ import { loginController } from '../controllers/loginController.js'
 import { emailCheckController } from '../controllers/emailCheckController.js'
 
 export const handlePostRequest= (req, res) => {
+
+  // check login 
   if ( req.url.startsWith('/login') ) {
     return loginController(req, res)
-  } else if ( req.url.startsWith('/checkEmail') ) {
+  } 
+  // check if email is valid when signing up
+  else if ( req.url.startsWith('/checkEmail') ) {
     return emailCheckController(req, res)
-  } else {
+  } 
+  // if an api call is made to a url that isn't any of the above, return 404
+  else {
     res.statusCode = 404
     res.end("URL not found")
   }
