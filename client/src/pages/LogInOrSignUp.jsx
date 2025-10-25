@@ -30,9 +30,32 @@ const LogInOrSignUp = ( {setAuth} ) => {
   const navigate = useNavigate();
 
   // on sign up, go to next slide
-  const handleNext = (e) => {
+  const handleNext = async (e) => {
     e.preventDefault();
-    setStep(step + 1);
+    
+    // checks at first page if email is already taken or not
+    if (step === 1) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/checkEmail`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json"},
+          body: JSON.stringify( {email} )
+        });
+        const data = await res.json();
+
+        if (!data.exists) {
+          setStep(2); // no other email exists, so move forward
+        } else {
+          alert("This email is already registered");
+        }
+      } catch (err) {
+        console.log("error checking email", err);
+        alert("Something went wrong, please try again");
+      }
+    } else {
+      // goes forward after email is valid
+      setStep( prev => prev + 1);
+    }
   };
 
   // on sign up, go back if user wants to make changes

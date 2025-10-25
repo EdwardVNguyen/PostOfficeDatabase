@@ -1,6 +1,6 @@
 import './App.css';
-import { Routes , Route } from 'react-router-dom';
-import { useState, Suspense, lazy } from "react";
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useState, useEffect, Suspense, lazy } from "react";
 
 import Home from './pages/Home';
 import LoginOrSignUp from './pages/LogInOrSignUp';
@@ -18,6 +18,19 @@ import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
+  const location = useLocation();
+
+  // anytime user goes to a non-protected route, then set authetnication false (as if they logged out)
+  useEffect( () => {
+    if (location.pathname === "/"              ||
+        location.pathname === "/loginorsignup" ||
+        location.pathname === "/shipping"      ||
+        location.pathname === "/tracking"      ||
+        location.pathname === "/about"         ||
+        location.pathname === "support" ) {
+      setAuth(false);
+    }
+  }, [location]);
 
   return (
     <>
