@@ -17,23 +17,23 @@ SnailMail is a full-stack web application built with **React**, **Node.js**, and
 
 ```
 SnailMail/
-├── client/ ---Frontend React application
+├── client/         # Frontend React application
 │ ├── src/
-│ │ ├── assets/ ---Images and static resources
-│ │ ├── components/ ---Reusable UI elements (buttons, forms, etc.)
-│ │ └── pages/ ---Main pages and views (e.g., Home, Login, Dashboard)
+│ │ ├── assets/     # Images and static resources
+│ │ ├── components/ # Reusable UI elements (buttons, forms, etc.)
+│ │ └── pages/      # Main pages and views (e.g., Home, Login, Dashboard)
 │ ├── public/
-│ └── .env ---Frontend environment variables
+│ └── .env          # Frontend environment variables
 │
-├── server/ ---Backend Node.js application
-│ ├── controllers/ ---Business logic and SQL query handling
-│ ├── routers/ ---API route definitions
-│ ├── utils/ ---Helper and utility functions
-│ ├── config/ ---MySQL database configuration
-│ ├── server.js ---Entry point to start the backend server
-│ └── .env ---Backend environment variables
+├── server/         # Backend Node.js application
+│ ├── controllers/  # Business logic and SQL query handling
+│ ├── routers/      # API route definitions
+│ ├── utils/        # Helper and utility functions
+│ ├── config/       # MySQL database configuration
+│ ├── server.js     # Entry point to start the backend server
+│ └── .env          # Backend environment variables
 │
-└── README.md ---Project documentation
+└── README.md       # Project documentation
 ```
 ---
 
