@@ -1,5 +1,5 @@
-// helper function to read JSON body from request
-export const getRequestBody = async (req) => {
+// helper function to read JSON body from request from POST requests
+export const getJSONRequestBody = async (req) => {
   return new Promise((resolve, reject) => {
     let body = ''
     req.on('data', chunk => (body += chunk));

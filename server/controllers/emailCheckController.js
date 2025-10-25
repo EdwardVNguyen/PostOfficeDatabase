@@ -1,5 +1,5 @@
-import connection from '../config/database.js';
-import { getRequestBody } from '../utils/getRequestBody.js'
+import pool from '../config/database.js';
+import { getJSONRequestBody } from '../utils/getJSONRequestBody.js'
 import { badClientRequest, badServerRequest } from '../utils/badRequest.js'
 
 export const emailCheckController = async (req, res) => {
@@ -7,7 +7,7 @@ export const emailCheckController = async (req, res) => {
   let email;
   
   try {
-    const body = await getRequestBody(req)
+    const body = await getJSONRequestBody(req)
     email = body.email
   } catch (err) {
     badClientRequest(res, err)
@@ -18,33 +18,28 @@ export const emailCheckController = async (req, res) => {
                FROM authentication
                WHERE LOWER(email) = LOWER(?)` 
 
-  // query database to find if there exists a user who has given email and password
-  connection.query(sql, [email], (error, results) => {
-
-        // if something wrong happened with the database query itself
-        if (error) {
-          badServerRequest(res)
-          return
-        } 
-
-        // if email has not been taken just yet
+  try {
+    const [results] = await pool.execute(sql, [email])
+    
+        // if not email already exists in database, then user can sign up 
         if (results.length === 0) {
           res.statusCode = 200
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify({
-            exists: false,
+            exists: false, 
             message: 'Email not already taken',
           })) 
 
-        // email has already been taken 
+        // user can't sign up with already existing email 
         } else {
-          res.statusCode = 401 
+          res.statusCode = 401,
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify({
             exists: true,
             message: 'Email has already been taken'
           }))
         }
-
-      })
-}
+  } catch {
+    badServerRequest(res)
+  }
+} 

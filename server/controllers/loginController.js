@@ -1,5 +1,5 @@
-import connection from '../config/database.js'
-import { getRequestBody } from '../utils/getRequestBody.js'
+import pool from '../config/database.js'
+import { getJSONRequestBody } from '../utils/getJSONRequestBody.js'
 import { badClientRequest, badServerRequest } from '../utils/badRequest.js'
 
 // functionality for user login (customer, manager, employee)
@@ -9,7 +9,7 @@ export const loginController = async (req, res) => {
   let email, password
 
   try {
-    const body = await getRequestBody(req)
+    const body = await getJSONRequestBody(req)
     email = body.email
     password = body.password
   } catch (err) {
@@ -22,15 +22,10 @@ export const loginController = async (req, res) => {
                WHERE LOWER(email) = LOWER(?) AND password = ?` 
 
   // query database to find if there exists a user who has given email and password
-  connection.query(sql, [email, password], (error, results) => {
-
-        // if something wrong happened with the database query itself
-        if (error) {
-          badServerRequest(res)
-          return
-        } 
-
-        // one person exists in database given email and password (because email is unique)
+  try {
+    const [results] = await pool.execute(sql, [email,password])
+    
+    // one person exists in database given email and password (because email is unique)
         if (results.length === 1) {
           res.statusCode = 200
           res.setHeader('Content-Type', 'application/json')
@@ -50,5 +45,8 @@ export const loginController = async (req, res) => {
           }))
         }
 
-      })
-}
+  // if something wrong happened with the database query itself
+  } catch {
+    badServerRequest(res)
+  }
+} 

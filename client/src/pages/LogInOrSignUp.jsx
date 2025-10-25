@@ -65,29 +65,37 @@ const LogInOrSignUp = ( {setAuth} ) => {
   }
 
   // submits all user details and user signs up into system
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     console.log({
       email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName,accountType
     });
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
+                                 method: 'POST',
+                                 headers: {'Content-Type': 'application/json' },
+                                 body: JSON.stringify( {email, password, phoneNumber, street, city, state, zipCode, firstName, middleName, lastName, accountType })
+                                });
+  const data = await response.json();
+  if (data.success) {
+    setAuth(true);
+    navigate('/customerPage');
+  } else {
+    alert('Something went wrong with user sign up');
+  }
   };
 
   // function to handle user login, checks if email and password exist in the database
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // get email and password from form
-    const formData = new FormData(e.target);
-    const email = formData.get('email');
-    const password = formData.get('password')
-
     // response - sends a POST request to server code, server code returns an JSON object {success: true/false message: 'message here'}
     // data - convert json code into javascript object
     const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
                                    method: 'POST',
                                    headers: {'Content-Type': 'application/json' }, 
-                                   body: JSON.stringify({email: `${email}`, password: `${password}` })
+                                   body: JSON.stringify({ email, password })
                                   });
     const data = await response.json(); 
 
