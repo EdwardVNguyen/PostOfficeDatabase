@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import './NavBar.css';
 
 import homeLogo from '../assets/homeLogo.svg';
-import profileIcon from '../assets/profileIcon.svg'
+import profileIcon from '../assets/profileIcon.svg';
 
 const AuthNavBar = ( {globalAccountType} ) => {
   const [isTiny, setIsTiny] = useState(false);
@@ -49,7 +49,7 @@ const AuthNavBar = ( {globalAccountType} ) => {
             <NavLink to="/userShipping">Shipping</NavLink> 
           </li>
           <li>
-            <NavLink to="/userTracking">Tracking</NavLink> 
+            <NavLink to="/userTrackPackage">Tracking</NavLink> 
           </li>
         </ul>
       </nav>

@@ -6,7 +6,7 @@ import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/AuthButton';
 
 import { useState } from 'react';
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LogInOrSignUp = ( {setAuth, setGlobalAccountType, setGlobalAuthId} ) => {
   const [mode, switchMode] = useState("Login"); 
@@ -100,6 +100,7 @@ const LogInOrSignUp = ( {setAuth, setGlobalAccountType, setGlobalAuthId} ) => {
     // navigate to home page if success, alert about wrong credentials otherwise
     if (data.success) {
       setAuth(true);
+      // send to different page depending on user credentials
       if (data.account_type === 'individual' || data.account_type === 'prime' || data.account_type === 'business') {
         setGlobalAccountType(data.account_type);
         setGlobalAuthId(data.auth_id);

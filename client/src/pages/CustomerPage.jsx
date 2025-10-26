@@ -1,9 +1,12 @@
 import './CustomerPage.css';
 import { useState, useEffect } from 'react'
 import { getCustomerData } from '../utils/getCustomerData.js'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerPage = ( {globalAuthId }) => {
   const [customerInfo, setCustomerInfo] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect( () => {
     const fetchData = async () => {
@@ -22,11 +25,11 @@ const CustomerPage = ( {globalAuthId }) => {
       <div className="subContainer1">
         <div className="profile">
           <div className="profileLeft"> 
-            <em className="icon"> Profile Icon </em>
-            <em className="accountID"> Account ID</em>
-            <div className="viewProfile"> View my profile</div>
+            <b className="icon"> {customerInfo?.customer.first_name}</b>
+            <em className="accountID"> Account ID: {customerInfo?.customer.customer_id}</em>
+            <div className="viewProfile">  View my <span onClick={ () => navigate('/userProfile') }> profile </span> </div>
           </div>
-          <div className="postOffice"> Nearest post office </div>
+          <div className="profileImg"> img placeholder</div>
         </div>
         <div className="tracker">
           <b> Tracking ID </b>

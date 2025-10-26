@@ -8,6 +8,10 @@ import CustomerPage from './pages/CustomerPage';
 import EmployeePage from './pages/EmployeePage';
 import ManagerPage from './pages/ManagerPage';
 
+import UserProfile from './pages/UserProfile';
+import UserShipping from './pages/UserShipping';
+import UserTrackPackage from './pages/UserTrackPackage';
+
 const Shipping = lazy( () => import('./pages/Shipping'));
 const Tracking = lazy( () => import('./pages/Tracking'));
 const About = lazy( () => import('./pages/About'));
@@ -63,6 +67,9 @@ const App = () => {
             <Route path='/customerPage' element={<CustomerPage globalAuthId={globalAuthId}/>} />
             <Route path='/employeePage' element={<EmployeePage globalAuthId={globalAuthId}/>} />
             <Route path='/managerPage' element={<ManagerPage globalAuthId={globalAuthId}/>} />
+            <Route path='/userProfile' element={<UserProfile/>} />
+            <Route path='/userShipping' element={<UserShipping/>} />
+            <Route path='/userTrackPackage' element={<UserTrackPackage/>} />
           </Route>
     
         </Routes>
