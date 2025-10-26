@@ -10,7 +10,7 @@ export const getCustomerPackageDataController = async (req, res) => {
     const url = parse(req.url, true);
     const authId = url.query.authId;
     const page = Number(url.query.page) || 1; // what page the user wants
-    const limit = Number(url.query.limit) || 10; // how many items per page
+    const limit = Number(url.query.limit) || 15; // how many items per page
     const offset = (page - 1) * limit; // how many items to skip in SQL
 
     if (!authId) {

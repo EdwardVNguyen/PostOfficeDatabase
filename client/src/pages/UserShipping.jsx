@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import './UserShipping.css'
 
+import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import "ag-grid-community/styles/ag-theme-alpine.css";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
+
 const UserShipping = ( {globalAuthId }) => {
   const [packages, setPackages] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    const limit = 10; // number of packages per request
+    const limit = 15; // number of packages per request
     const authId = globalAuthId;
 
     const fetchPackages = async (pageNum = 1) => {
@@ -20,7 +26,7 @@ const UserShipping = ( {globalAuthId }) => {
 
         if (data.success) {
           // Append new packages if not the first page
-          setPackages(prev => pageNum === 1 ? data.packages : [...prev, ...data.packages]);
+          setPackages(data.packages);
           setTotalPages(data.totalPages);
           setPage(pageNum);
         } else {
@@ -38,25 +44,81 @@ const UserShipping = ( {globalAuthId }) => {
     fetchPackages(1);
   }, [authId]);
 
+  // Row Data: The data to be displayed.
+    
+    const rowData = packages.map(pkg => ({
+      ID: pkg.package_id,
+      Recipient: pkg.recipient_name,
+      DropoffAddress: pkg.recipient_address_id,
+      Type: pkg.package_type,
+      Weight: pkg.weight,
+      Dimensions: `${Math.round(pkg.length)}x${Math.round(pkg.width)}x${Math.round(pkg.height)}`,
+      PackageStatus: pkg.package_status,
+      DateCreated: pkg.created_at,
+      LastModified: pkg.last_updated
+    }));
+        
+  // Column Definitions: Defines the columns to be displayed.
+    const [colDefs, setColDefs] = useState([
+        { 
+          field: "ID",
+          flex: 0.5
+        },
+        { 
+          field: "Type",
+          flex: 0.75
+        },
+        { field: "PackageStatus"},
+        { 
+          field: "Recipient",
+          flex: 1.25
+        },
+        { 
+          field: "DropoffAddress",
+          flex: 1.25
+        },
+        { 
+          field: "Dimensions",
+          headerName: "LxWxH (in cm)"
+        },
+        { 
+          field: "Weight",
+          headerName: "Weight (in kg)",
+          flex: 0.85,
+        },
+        { 
+          field: "LastModified",
+          flex: 0.85
+        },
+        { 
+          field: "DateCreated",
+          flex: 0.85
+        }
+    ]);
+
   return (
-    <div className="userShippingContainer" >
-      <h2>My Shipments</h2>
-      <div className="userPackageList">
-        <ul >
-          {packages.map(pkg => (
-            <li key={pkg.package_id}>
-              {pkg.package_type} --- {pkg.package_status} --- {pkg.sender_name} to {pkg.recipient_name} --- {pkg.created_at}
-            </li>
-          ))}
-        </ul>
+    <div className="userShippingContainer">
+      <b> Your Shipments, Anytime Anywhere </b>
+      <div className="ag-theme-alpine" style={{ height: 500,width: 1350}}>
+          <AgGridReact
+              rowData={rowData}
+              columnDefs={colDefs}
+          />
       </div>
-      {loading && <p>Loading...</p>}
-
-      {page < totalPages && !loading && (
-        <button onClick={() => fetchPackages(page + 1)}>Load More</button>
-      )}
-
-      {page >= totalPages && <p>No more packages</p>}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button 
+            key={i+1} 
+            onClick={() => fetchPackages(i+1)}
+            style={{ 
+              margin: '0 5px', 
+              fontWeight: page === i+1 ? 'bold' : 'normal'
+            }}
+          >
+            {i+1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
