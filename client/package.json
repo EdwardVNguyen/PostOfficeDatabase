@@ -29,13 +29,13 @@
   "main": "eslint.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EdwardVNguyen/PostOfficeDatabase.git"
+    "url": "git+https://github.com/EdwardVNguyen/SnailMail.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EdwardVNguyen/PostOfficeDatabase/issues"
+    "url": "https://github.com/EdwardVNguyen/SnailMail/issues"
   },
-  "homepage": "https://github.com/EdwardVNguyen/PostOfficeDatabase#readme"
+  "homepage": "https://github.com/EdwardVNguyen/SnailMail#readme"
 }
