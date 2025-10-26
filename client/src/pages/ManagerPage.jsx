@@ -1,4 +1,5 @@
-const ManagerPage = () => {
+const ManagerPage = ( {globalAuthId} ) => {
+  const authId = globalAuthId;
   return (
     <div> Manager Page </div>
   );

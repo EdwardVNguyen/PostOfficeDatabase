@@ -20,7 +20,8 @@ import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
-  const [globalAccountType, setGlobalAccountType] = useState(null);
+  const [globalAccountType, setGlobalAccountType] = useState(null); // acount type will persist after login 
+  const [globalAuthId, setGlobalAuthId] = useState(null); // account id will persist after login and sign up (so we can personalize page according to user)
   const location = useLocation();
 
   // anytime user goes to a non-protected route, then set authetnication false (as if they logged out)
@@ -49,13 +50,19 @@ const App = () => {
           <Route path="/support" element={<Support/>} />
 
           {/* login / signup page can set authentication status */}
-          <Route path="/loginorsignup" element={<LoginOrSignUp setAuth={setAuth} setGlobalAccountType={setGlobalAccountType}/>} /> 
+          <Route path="/loginorsignup" 
+                 element={<LoginOrSignUp 
+                  setAuth={setAuth} 
+                  setGlobalAccountType={setGlobalAccountType} 
+                  setGlobalAuthId={setGlobalAuthId}
+                 />} 
+           /> 
 
           {/* protected routes */}
           <Route element={<PrivateRoutes auth={auth} />}>
-            <Route path='/customerPage' element={<CustomerPage/>} />
-            <Route path='/employeePage' element={<EmployeePage/>} />
-            <Route path='/managerPage' element={<ManagerPage/>} />
+            <Route path='/customerPage' element={<CustomerPage globalAuthId={globalAuthId}/>} />
+            <Route path='/employeePage' element={<EmployeePage globalAuthId={globalAuthId}/>} />
+            <Route path='/managerPage' element={<ManagerPage globalAuthId={globalAuthId}/>} />
           </Route>
     
         </Routes>

@@ -8,7 +8,7 @@ import AuthButton from '../components/AuthButton';
 import { useState } from 'react';
 import { useNavigate} from 'react-router-dom'
 
-const LogInOrSignUp = ( {setAuth, setGlobalAccountType} ) => {
+const LogInOrSignUp = ( {setAuth, setGlobalAccountType, setGlobalAuthId} ) => {
   const [mode, switchMode] = useState("Login"); 
   const [step, setStep] = useState(1)
 
@@ -68,10 +68,6 @@ const LogInOrSignUp = ( {setAuth, setGlobalAccountType} ) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    console.log({
-      email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName,accountType
-    });
-
     const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
                                    method: 'POST',
                                    headers: {'Content-Type': 'application/json' },
@@ -81,6 +77,7 @@ const LogInOrSignUp = ( {setAuth, setGlobalAccountType} ) => {
 
     if (data.success) {
       setAuth(true);
+      setGlobalAuthId(data.auth_id);
       navigate('/customerPage');
     } else {
       alert('Something went wrong with user sign up');
@@ -105,12 +102,15 @@ const LogInOrSignUp = ( {setAuth, setGlobalAccountType} ) => {
       setAuth(true);
       if (data.account_type === 'individual' || data.account_type === 'prime' || data.account_type === 'business') {
         setGlobalAccountType(data.account_type);
+        setGlobalAuthId(data.auth_id);
         navigate('/customerPage');
       } else if (data.account_type === 'clerk' || data.account_type === 'courier') {
         setGlobalAccountType(data.account_type);
+        setGlobalAuthId(data.auth_id);
         navigate('/employeePage');
       } else if (data.account_type === 'manager') {
         setGlobalAccountType(data.account_type);
+        setGlobalAuthId(data.auth_id);
         navigate('/managerPage');
       } else {
         setAuth(false);

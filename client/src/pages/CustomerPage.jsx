@@ -1,6 +1,22 @@
 import './CustomerPage.css';
+import { useState, useEffect } from 'react'
+import { getCustomerData } from '../utils/getCustomerData.js'
 
-const CustomerPage = () => {
+const CustomerPage = ( {globalAuthId }) => {
+  const [customerInfo, setCustomerInfo] = useState(null);
+
+  useEffect( () => {
+    const fetchData = async () => {
+      const data = await getCustomerData(globalAuthId);
+      setCustomerInfo(data);
+    };
+    fetchData();
+  }, []);
+
+  if (!customerInfo) return <div>Loading...</div>
+
+  console.log(customerInfo);
+    
   return (
     <div className="customerPageContainer">
       <div className="subContainer1">

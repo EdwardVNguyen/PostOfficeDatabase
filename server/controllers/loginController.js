@@ -71,7 +71,8 @@ export const loginController = async (req, res) => {
     res.end(JSON.stringify({
       success: true,
       message: 'Login success',
-      account_type: accountType
+      account_type: accountType,
+      auth_id: authId
     }));
 
   } catch (error) {
