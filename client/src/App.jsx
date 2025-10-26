@@ -20,6 +20,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
+  const [globalAccountType, setGlobalAccountType] = useState(null);
   const location = useLocation();
 
   // anytime user goes to a non-protected route, then set authetnication false (as if they logged out)
@@ -27,16 +28,15 @@ const App = () => {
     if (location.pathname === "/"              ||
         location.pathname === "/loginorsignup" ||
         location.pathname === "/shipping"      ||
-        location.pathname === "/tracking"      ||
-        location.pathname === "/about"         ||
-        location.pathname === "support" ) {
+        location.pathname === "/tracking"      
+        ) {
       setAuth(false);
     }
   }, [location]);
 
   return (
     <>
-      {auth ? <AuthNavBar /> : <NavBar />}
+      {auth ? <AuthNavBar globalAccountType={globalAccountType} /> : <NavBar />}
       
       <main>
       <Suspense fallback={<div>Loading...</div>}>
@@ -49,7 +49,7 @@ const App = () => {
           <Route path="/support" element={<Support/>} />
 
           {/* login / signup page can set authentication status */}
-          <Route path="/loginorsignup" element={<LoginOrSignUp setAuth={setAuth}/>} /> 
+          <Route path="/loginorsignup" element={<LoginOrSignUp setAuth={setAuth} setGlobalAccountType={setGlobalAccountType}/>} /> 
 
           {/* protected routes */}
           <Route element={<PrivateRoutes auth={auth} />}>

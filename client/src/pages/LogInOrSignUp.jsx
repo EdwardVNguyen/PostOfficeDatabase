@@ -8,7 +8,7 @@ import AuthButton from '../components/AuthButton';
 import { useState } from 'react';
 import { useNavigate} from 'react-router-dom'
 
-const LogInOrSignUp = ( {setAuth} ) => {
+const LogInOrSignUp = ( {setAuth, setGlobalAccountType} ) => {
   const [mode, switchMode] = useState("Login"); 
   const [step, setStep] = useState(1)
 
@@ -104,10 +104,13 @@ const LogInOrSignUp = ( {setAuth} ) => {
     if (data.success) {
       setAuth(true);
       if (data.account_type === 'individual' || data.account_type === 'prime' || data.account_type === 'business') {
+        setGlobalAccountType(data.account_type);
         navigate('/customerPage');
       } else if (data.account_type === 'clerk' || data.account_type === 'courier') {
+        setGlobalAccountType(data.account_type);
         navigate('/employeePage');
       } else if (data.account_type === 'manager') {
+        setGlobalAccountType(data.account_type);
         navigate('/managerPage');
       } else {
         setAuth(false);
