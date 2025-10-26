@@ -5,7 +5,7 @@ import './NavBar.css';
 import homeLogo from '../assets/homeLogo.svg';
 import profileIcon from '../assets/profileIcon.svg'
 
-const AuthNavBar = () => {
+const AuthNavBar = ( {globalAccountType} ) => {
   const [isTiny, setIsTiny] = useState(false);
 
   useEffect(() => {
@@ -25,8 +25,13 @@ const AuthNavBar = () => {
       <nav>
         <ul>
           <li>
-            {/* NavLink allows to navigate different routes using the "to" prop */}
-            <NavLink to="/customerPage" ><img className="homeLogo" src={homeLogo} alt="Home"/></NavLink> 
+            {/* Routes to different page depending on account type */}
+            { (globalAccountType === 'courier' || globalAccountType === 'clerk')
+            ? <NavLink to="/employeePage" ><img className="homeLogo" src={homeLogo} alt="Employee page"/></NavLink>  
+            : globalAccountType === 'manager'
+              ? <NavLink to="/managerPage" ><img className="homeLogo" src={homeLogo} alt="Manager page"/></NavLink> 
+              : <NavLink to="/customerPage" ><img className="homeLogo" src={homeLogo} alt="Customer page"/></NavLink> 
+            }
           </li>
         </ul>
       </nav>
