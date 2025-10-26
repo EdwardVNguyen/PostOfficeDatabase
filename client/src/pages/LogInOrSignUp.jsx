@@ -72,19 +72,19 @@ const LogInOrSignUp = ( {setAuth} ) => {
       email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName,accountType
     });
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
-                                 method: 'POST',
-                                 headers: {'Content-Type': 'application/json' },
-                                 body: JSON.stringify( {email, password, phoneNumber, street, city, state, zipCode, firstName, middleName, lastName, accountType })
-                                });
-  const data = await response.json();
-  if (data.success) {
-    setAuth(true);
-    localStorage.setItem('auth','true')
-    navigate('/customerPage');
-  } else {
-    alert('Something went wrong with user sign up');
-  }
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
+                                   method: 'POST',
+                                   headers: {'Content-Type': 'application/json' },
+                                   body: JSON.stringify( {email, password, phoneNumber, street, city, state, zipCode, firstName, middleName, lastName, accountType })
+                                  });
+    const data = await response.json();
+
+    if (data.success) {
+      setAuth(true);
+      navigate('/customerPage');
+    } else {
+      alert('Something went wrong with user sign up');
+    }
   };
 
   // function to handle user login, checks if email and password exist in the database
@@ -103,8 +103,16 @@ const LogInOrSignUp = ( {setAuth} ) => {
     // navigate to home page if success, alert about wrong credentials otherwise
     if (data.success) {
       setAuth(true);
-      localStorage.setItem('auth','true')
-      navigate('/customerPage');
+      if (data.account_type === 'individual' || data.account_type === 'prime' || data.account_type === 'business') {
+        navigate('/customerPage');
+      } else if (data.account_type === 'clerk' || data.account_type === 'courier') {
+        navigate('/employeePage');
+      } else if (data.account_type === 'manager') {
+        navigate('/managerPage');
+      } else {
+        setAuth(false);
+        alert('Invalid account type when logging in')
+      }
     } else {
       alert('Invalid email or password.');
     }

@@ -1,10 +1,12 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, Suspense, lazy } from "react";
 
 import Home from './pages/Home';
 import LoginOrSignUp from './pages/LogInOrSignUp';
-import CustomerPage from './pages/CustomerPage'
+import CustomerPage from './pages/CustomerPage';
+import EmployeePage from './pages/EmployeePage';
+import ManagerPage from './pages/ManagerPage';
 
 const Shipping = lazy( () => import('./pages/Shipping'));
 const Tracking = lazy( () => import('./pages/Tracking'));
@@ -17,12 +19,20 @@ import Footer from './components/Footer';
 import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
-  const [auth, setAuth] = useState( () => localStorage.getItem("auth") === "true");
+  const [auth, setAuth] = useState(false);
+  const location = useLocation();
 
-  // authentication persists unless user explicity signs out
+  // anytime user goes to a non-protected route, then set authetnication false (as if they logged out)
   useEffect( () => {
-    localStorage.setItem("auth", auth) 
-  }, [auth] );
+    if (location.pathname === "/"              ||
+        location.pathname === "/loginorsignup" ||
+        location.pathname === "/shipping"      ||
+        location.pathname === "/tracking"      ||
+        location.pathname === "/about"         ||
+        location.pathname === "support" ) {
+      setAuth(false);
+    }
+  }, [location]);
 
   return (
     <>
@@ -32,7 +42,7 @@ const App = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* non-protected routes */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home/>} />
           <Route path="/shipping" element={<Shipping/>} />
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/about" element={<About/>} />
@@ -44,6 +54,8 @@ const App = () => {
           {/* protected routes */}
           <Route element={<PrivateRoutes auth={auth} />}>
             <Route path='/customerPage' element={<CustomerPage/>} />
+            <Route path='/employeePage' element={<EmployeePage/>} />
+            <Route path='/managerPage' element={<ManagerPage/>} />
           </Route>
     
         </Routes>
