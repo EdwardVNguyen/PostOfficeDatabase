@@ -5,10 +5,12 @@
 .FAQs {
     display: block;
     margin-left: 5%;
+    box-shadow: 2px 2px 5px 2px #ddd;
 }
 
-.FAQs h1 {
+.FAQs .title {
     text-decoration: underline;
+    align-items: center;
 }
 
 .FAQ-wrapper {

@@ -4,7 +4,9 @@ const Support = () => {
   return (
     <div className="support-container">
       <div className="FAQs">
-        <h1>Frequently Asked Questions (FAQs)</h1>
+        <div className="title">
+          <h1>Frequently Asked Questions (FAQs)</h1>
+        </div>
         <div className="FAQ-wrapper">
           <div className="question">
             <div className="qText"><h3>Q: What are operating hours for SnailMail?</h3></div>
