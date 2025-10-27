@@ -15,6 +15,9 @@ import UserTrackPackage from './pages/UserTrackPackage';
 import CreateShipment from './pages/CreateShipment';
 import ElectronicShop from './pages/ElectronicShop';
 import MovePackages from './pages/MovePackages';
+import ReportPage from './pages/ReportPage';
+import EmployeesPage from './pages/EmployeesPage';
+import FacilitiesPage from './pages/FacilitiesPage';
 
 const Tracking = lazy( () => import('./pages/Tracking'));
 const About = lazy( () => import('./pages/About'));
@@ -75,6 +78,9 @@ const App = () => {
             <Route path='/userTrackPackage' element={<UserTrackPackage/>} />
             <Route path='/ecommercePage' element={<ElectronicShop/>} />
             <Route path='/movePackages' element={<MovePackages globalAuthId={globalAuthId}/>} />
+            <Route path='/reportPage' element={<ReportPage globalAuthId={globalAuthId}/>} />
+            <Route path='/employeesPage' element={<EmployeesPage globalAuthId={globalAuthId}/>} />
+            <Route path='/facilitiesPage' element={<FacilitiesPage globalAuthId={globalAuthId}/>} />
           </Route>
     
         </Routes>

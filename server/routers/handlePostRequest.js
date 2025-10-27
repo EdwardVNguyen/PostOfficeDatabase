@@ -2,6 +2,8 @@ import { loginController } from '../controllers/loginController.js'
 import { emailCheckController } from '../controllers/emailCheckController.js'
 import { userSignUpController } from '../controllers/userSignUpController.js'
 import { createTrackingEventsController } from '../controllers/createTrackingEventsController.js'
+import { addEmployeeController } from '../controllers/addEmployeeController.js'
+import { updateEmployeeController } from '../controllers/updateEmployeeController.js'
 
 export const handlePostRequest= (req, res) => {
 
@@ -20,6 +22,14 @@ export const handlePostRequest= (req, res) => {
   // create tracking events for moving packages between facilities
   else if ( req.url.startsWith('/createTrackingEvents') ) {
     return createTrackingEventsController(req, res)
+  }
+  // add new employee
+  else if ( req.url.startsWith('/addEmployee') ) {
+    return addEmployeeController(req, res)
+  }
+  // update employee field
+  else if ( req.url.startsWith('/updateEmployee') ) {
+    return updateEmployeeController(req, res)
   }
   // if an api call is made to a url that isn't any of the above, return 404
   else {

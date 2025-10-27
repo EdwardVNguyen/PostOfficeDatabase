@@ -4,6 +4,9 @@ import { getAddressDataController } from '../controllers/getAddressDataControlle
 import { getFacilitiesController } from '../controllers/getFacilitiesController.js'
 import { getPackagesByFacilityController } from '../controllers/getPackagesByFacilityController.js'
 import { getEmployeeIdController } from '../controllers/getEmployeeIdController.js'
+import { getNextEmployeeIdController } from '../controllers/getNextEmployeeIdController.js'
+import { getEmployeesController } from '../controllers/getEmployeesController.js'
+import { checkEmployeeUniquenessController } from '../controllers/checkEmployeeUniquenessController.js'
 
 export const handleGetRequest = (req, res) => {
 
@@ -25,6 +28,15 @@ export const handleGetRequest = (req, res) => {
   // get employee_id from auth_id
   } else if ( req.url.startsWith('/getEmployeeId')) {
     return getEmployeeIdController(req, res)
+  // get next available employee_id
+  } else if ( req.url.startsWith('/getNextEmployeeId')) {
+    return getNextEmployeeIdController(req, res)
+  // get all employees or filter by role
+  } else if ( req.url.startsWith('/getEmployees')) {
+    return getEmployeesController(req, res)
+  // check employee ID or SSN uniqueness
+  } else if ( req.url.startsWith('/checkEmployeeUniqueness')) {
+    return checkEmployeeUniquenessController(req, res)
   }
   // if an api call is made to a url that isn't any of the above, return 404
   else {
