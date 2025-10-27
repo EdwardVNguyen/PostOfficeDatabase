@@ -3,6 +3,9 @@ import homeIcon1 from '../assets/homeIcon1.svg';
 import item1 from '../assets/item1.svg';
 import item2 from '../assets/item2.svg';
 import item3 from '../assets/item3.svg';
+import item4 from '../assets/item4.svg';
+import item5 from '../assets/item5.svg';
+import item6 from '../assets/item6.svg';
 import InfoCard from '../components/InfoCard'
 import { useNavigate } from 'react-router-dom';
 
@@ -57,19 +60,19 @@ const Home = () => {
         <h2>This Is How We Do It</h2>
         <div className="items">
           <InfoCard
-          img={DropOff}
+          img={item6}
           imgDescription="man dropping off package at post office"
           title="Drop off your package at one of our stores, and we will take care of the rest."
           />
           <InfoCard
-            img={DeliveryTruck}
+            img={item5}
             imgDescription="Man putting package in truck"
             title="We keep you updated every step of the way to make sure your package gets delivered."
           />
           <InfoCard
-            img={DeliveredPackage}
+            img={item4}
             imgDescription="Man delivered package"
-            title="We safely deliver your package straight to you or your recipient."
+            title="We safely deliver your package straight to your recipient."
           />
         </div>
       </div>
