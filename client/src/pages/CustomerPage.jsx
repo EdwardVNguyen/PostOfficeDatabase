@@ -41,7 +41,8 @@ const CustomerPage = ( {globalAuthId }) => {
       <div className="quickLinks">
         Quick Links
       </div>
-    </div>
+
+      </div>
   );
 };
 

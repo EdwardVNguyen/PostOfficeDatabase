@@ -24,9 +24,14 @@ const UserShipping = ( {globalAuthId }) => {
       navigate('/support');
     };
     const navigateSettingPage = () => {
-      navigate('/userProfile')
+      navigate('/userProfile');
     }
-
+    const navigateCreateShipment = () => {
+        navigate('/createShipment');
+    }
+    const navigateEShop = () => {
+      navigate('/ecommercePage');
+    }
 
     const limit = 12; // number of packages per request
     const authId = globalAuthId;
@@ -139,11 +144,11 @@ const UserShipping = ( {globalAuthId }) => {
     <div className="userShippingContainer">
       <div className="userShippingSideBar"> 
         <div/>
-        <button className="userShippingBtn"> Your Shipments </button>
-        <button className="userShippingBtn"> Create Shipment </button>
-        <button className="userShippingBtn"> E-Shop</button>
-        <button className="userShippingBtn" onClick={navigateSettingPage}> Settings </button>
-        <button className="userShippingBtn" onClick={navigateSupportPage}> Help </button>
+        <button className="userShippingBtn"> 📦 Your Shipments </button>
+        <button className="userShippingBtn" onClick={navigateCreateShipment}> ✉️  Create Shipment </button>
+        <button className="userShippingBtn" onClick={navigateEShop} > 🛒 E-Shop</button>
+        <button className="userShippingBtn" onClick={navigateSettingPage}> ⚙️  Settings </button>
+        <button className="userShippingBtn" onClick={navigateSupportPage}> 💬 Help </button>
       </div>
       <div className="userShippingRight">
         <div className="userShippingTop">
