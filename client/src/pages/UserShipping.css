@@ -14,12 +14,14 @@
 .userShippingContainer .userShippingTop {
   display: flex;
   justify-content: space-between;
-  padding: 23px;
-  border: 1px solid rgba(0, 0, 0, 0.2)
+  padding: 9px;
+  border: 1px solid rgba(0, 0, 0, 0.2); 
 }
 .userShippingContainer .userShippingTop .userShippingDesc {
   font-size: 30px;
   font-weight: bold;
+  align-self: center;
+  margin-left: 10px;
   color: #50589C;
 }
 .userShippingContainer .userShippingTop .userShippingDesc span{
