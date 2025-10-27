@@ -8,6 +8,7 @@ const CustomerPage = ( {globalAuthId }) => {
 
   const navigate = useNavigate();
 
+  // fetch all info from customer relation in MySQL database
   useEffect( () => {
     const fetchData = async () => {
       const data = await getCustomerData(globalAuthId);
@@ -18,8 +19,6 @@ const CustomerPage = ( {globalAuthId }) => {
 
   if (!customerInfo) return <div>Loading...</div>
 
-  console.log(customerInfo);
-    
   return (
     <div className="customerPageContainer">
       <div className="subContainer1">
@@ -38,9 +37,6 @@ const CustomerPage = ( {globalAuthId }) => {
             <button> Track </button>
           </form>
         </div> 
-      </div>
-      <div className="mostRecentPackage">
-        Recent Packages
       </div>
       <div className="quickLinks">
         Quick Links

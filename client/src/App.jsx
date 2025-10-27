@@ -68,7 +68,7 @@ const App = () => {
             <Route path='/employeePage' element={<EmployeePage globalAuthId={globalAuthId}/>} />
             <Route path='/managerPage' element={<ManagerPage globalAuthId={globalAuthId}/>} />
             <Route path='/userProfile' element={<UserProfile/>} />
-            <Route path='/userShipping' element={<UserShipping/>} />
+            <Route path='/userShipping' element={<UserShipping globalAuthId={globalAuthId}/>} />
             <Route path='/userTrackPackage' element={<UserTrackPackage/>} />
           </Route>
     
