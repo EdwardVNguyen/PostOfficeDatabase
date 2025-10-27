@@ -1,0 +1,30 @@
+.support-container {
+    margin-top: 3rem;
+}
+
+.FAQs {
+    display: block;
+    margin-left: 5%;
+}
+
+.FAQs h1 {
+    text-decoration: underline;
+}
+
+.FAQ-wrapper {
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+.question {
+    margin-bottom: 10px;
+}
+
+.qText {
+    margin-bottom: 5px;
+    font-size: medium;
+}
+
+.aText {
+    margin-left: 1%;
+}

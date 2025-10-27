@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.description {
+    text-align: center;
+}
+
+.members h2 {
+    text-align: center;
+}
+
+.members .row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.members .row2 {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+}

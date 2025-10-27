@@ -54,13 +54,24 @@ const Home = () => {
           </div>
       </div>
       <div className="section3">
-        TODO: How it works / process section
-      </div>
-      <div className="section4">
-        TODO: call to action section
-      </div>
-      <div className="section5">
-        TODO: Frequently asked questions 
+        <h2>This Is How We Do It</h2>
+        <div className="items">
+          <InfoCard
+          img={DropOff}
+          imgDescription="man dropping off package at post office"
+          title="Drop off your package at one of our stores, and we will take care of the rest."
+          />
+          <InfoCard
+            img={DeliveryTruck}
+            imgDescription="Man putting package in truck"
+            title="We keep you updated every step of the way to make sure your package gets delivered."
+          />
+          <InfoCard
+            img={DeliveredPackage}
+            imgDescription="Man delivered package"
+            title="We safely deliver your package straight to you or your recipient."
+          />
+        </div>
       </div>
     </>
   );
