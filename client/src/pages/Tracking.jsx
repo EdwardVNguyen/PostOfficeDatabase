@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { useState } from 'react';
+import './Tracking.css';
+
 const Tracking = () => {
-  // State declarations
-  const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState('');
   const [trackingData, setTrackingData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleInputChange = (e) => {
     setTrackingNumber(e.target.value);
-    console.log('Tracking Number input changed:', e.target.value);
   };
-
   // fetch tracking data from backend
   const fetchTrackingData = async (tracking_num) => {
     setIsLoading(true);
     setError('');
+    
     try {
       const response = await fetch(`http://localhost:8000/tracking/${tracking_num}`);
       const data = await response.json();
       if (data.success) {
         setTrackingData(data);
-        console.log('Fetched tracking data:', trackingData);
       } else {
         setError(data.message || 'Error fetching tracking data');
       }
@@ -29,64 +29,69 @@ const Tracking = () => {
       console.error('Fetch error:', error);
     } finally {
       setIsLoading(false);
+      setHasSearched(true);
     }
   };
 
-  /// form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to fetch tracking data will go here
     setError('');
     setTrackingData(null);
-
+    setHasSearched(false);
+    
     if (!trackingNumber.trim()) {
       setError('Please enter a tracking Number.');
       return;
     }
-
-    console.log('Submitted tracking Number:', trackingNumber);
-    fetchTrackingData(trackingNumber);
-    console.log('After fetch call, trackingData state:', trackingData);
+    
+    fetchTrackingData(trackingNumber.trim());
   };
 
-  //format date helper
-  const formatDate = (date_string) => {
-    const date = new Date(date_string);
-    return date.toLocaleString('en-US', {
-      weekday: 'short',
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
+  // format date helper
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'short', 
+      month: 'numeric', 
+      day: 'numeric', 
+      year: 'numeric' 
     });
   };
 
   // format time helper
-  const formatTime = (date_string) => {
-    const date = new Date(date_string);
-    return date.toLocaleTimeString('en-US', {
-      hour: 'numeric',
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
       minute: '2-digit',
-      hour12: true,
+      hour12: true 
     });
-  }
+  };
+
   return (
     <div className="tracking-container">
       <h1>Track Your Package</h1>
-      <form onSubmit={handleSubmit} className="tracking-form">
-        <input
-          type="text"
-          placeholder="Enter Tracking Number"
-          value={trackingNumber}
-          onChange={handleInputChange}
-        />
-        <button type="submit" disabled={isLoading} className="tracking-button">
-          {isLoading ? 'Tracking...' : 'Track Package'}
-        </button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {isLoading && <p>Loading tracking information...</p>}
-
-      {trackingData && (
+      {/* Search Form */}
+      <div className="tracking-search-section">
+        <form onSubmit={handleSubmit} className="tracking-form">
+          <input
+            type="text"
+            value={trackingNumber}
+            onChange={handleInputChange}
+            placeholder="Enter tracking number"
+            className="tracking-input"
+          />
+          <button type="submit" disabled={isLoading} className="tracking-button">
+            {isLoading ? 'Tracking...' : 'Track'}
+          </button>
+        </form>
+      </div>
+      {/* Error Message */}
+      {error && <div className="error-message">{error}</div>}
+      {/* Loading State */}
+      {isLoading && <div className="loading-message">Loading tracking information...</div>}
+      {/* Tracking Results */}
+      {hasSearched && trackingData && (
         <div className="tracking-results">
           {/* Package Summary Section */}
           <div className="package-summary">
@@ -114,7 +119,7 @@ const Tracking = () => {
                 </span>
               </div>
               <div className="info-item">
-                <span className="info-label">Package Type: </span>
+                <span className="info-label">Package Type:</span>
                 <span className="info-value">{trackingData.package.package_type}</span>
               </div>
               <div className="info-item">
@@ -134,6 +139,7 @@ const Tracking = () => {
                   <tr>
                     <th>Date/Time</th>
                     <th>Activity</th>
+                    <th>Location</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -146,6 +152,11 @@ const Tracking = () => {
                       <td className="activity-cell">
                         {event.event_type}
                       </td>
+                      <td className="location-cell">
+                        {event.city_name && event.state_name 
+                          ? `${event.city_name}, ${event.state_name}`
+                          : 'N/A'}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -156,7 +167,6 @@ const Tracking = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
