@@ -1,5 +1,6 @@
 import http from 'node:http'
 import { handlePostRequest } from './routers/handlePostRequest.js'
+import { handleGetRequest } from './routers/handleGetRequest.js'
 
 const PORT = 8000 
 
@@ -19,6 +20,8 @@ const server = http.createServer( (req,res) => {
   try {
     if (req.method === 'POST') {
       handlePostRequest(req, res)
+    } else if (req.method === 'GET') {
+      handleGetRequest(req, res)
     } else {
       res.statusCode = 404
       res.end('Request method invalid')
