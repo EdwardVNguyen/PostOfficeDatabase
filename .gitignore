@@ -25,3 +25,4 @@ dist-ssr
 
 .env
 .vercel
+db_ver5.sql
