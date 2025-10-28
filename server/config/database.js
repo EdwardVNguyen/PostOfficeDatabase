@@ -1,10 +1,10 @@
 import mysql from 'mysql2/promise'
 
 const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST || 'localhost',
-  port: process.env.MYSQL_PORT || 3306,
-  user: process.env.MYSQL_USER || 'root',
-  password: process.env.MYSQL_PASSWORD || '',
+  host: process.env.MYSQLHOST || 'localhost',
+  port: process.env.MYSQLPORT || 3306,
+  user: process.env.MYSQLUSER || 'root',
+  password: process.env.MYSQLPASSWORD || '',
   database: process.env.MYSQL_DATABASE || 'postOfficeDatabase',
   waitForConnections: true,
   connectionLimit: 10,
