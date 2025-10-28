@@ -4,9 +4,21 @@ import { useState, useEffect, Suspense, lazy } from "react";
 
 import Home from './pages/Home';
 import LoginOrSignUp from './pages/LogInOrSignUp';
-import CustomerPage from './pages/CustomerPage'
+import CustomerPage from './pages/CustomerPage';
+import EmployeePage from './pages/EmployeePage';
+import CourierPage from './pages/CourierPage';
+import ManagerPage from './pages/ManagerPage';
 
-const Shipping = lazy( () => import('./pages/Shipping'));
+import UserProfile from './pages/UserProfile';
+import UserShipping from './pages/UserShipping';
+import UserTrackPackage from './pages/UserTrackPackage';
+import CreateShipment from './pages/CreateShipment';
+import ElectronicShop from './pages/ElectronicShop';
+import MovePackages from './pages/MovePackages';
+import ReportPage from './pages/ReportPage';
+import EmployeesPage from './pages/EmployeesPage';
+import FacilitiesPage from './pages/FacilitiesPage';
+
 const Tracking = lazy( () => import('./pages/Tracking'));
 const About = lazy( () => import('./pages/About'));
 const Support = lazy( () => import('./pages/Support'));
@@ -18,40 +30,57 @@ import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
+  const [globalAccountType, setGlobalAccountType] = useState(null); // acount type will persist after login 
+  const [globalAuthId, setGlobalAuthId] = useState(null); // account id will persist after login and sign up (so we can personalize page according to user)
   const location = useLocation();
 
   // anytime user goes to a non-protected route, then set authetnication false (as if they logged out)
   useEffect( () => {
     if (location.pathname === "/"              ||
         location.pathname === "/loginorsignup" ||
-        location.pathname === "/shipping"      ||
-        location.pathname === "/tracking"      ||
-        location.pathname === "/about"         ||
-        location.pathname === "support" ) {
+        location.pathname === "/tracking"      
+        ) {
       setAuth(false);
     }
   }, [location]);
 
   return (
     <>
-      {auth ? <AuthNavBar /> : <NavBar />}
+      {auth ? <AuthNavBar globalAccountType={globalAccountType} /> : <NavBar />}
       
       <main>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* non-protected routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/shipping" element={<Shipping/>} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/createShipment" element={<CreateShipment/>} />
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/support" element={<Support/>} />
 
           {/* login / signup page can set authentication status */}
-          <Route path="/loginorsignup" element={<LoginOrSignUp setAuth={setAuth}/>} /> 
+          <Route path="/loginorsignup" 
+                 element={<LoginOrSignUp 
+                  setAuth={setAuth} 
+                  setGlobalAccountType={setGlobalAccountType} 
+                  setGlobalAuthId={setGlobalAuthId}
+                 />} 
+           /> 
 
           {/* protected routes */}
           <Route element={<PrivateRoutes auth={auth} />}>
-            <Route path='/customerPage' element={<CustomerPage/>} />
+            <Route path='/customerPage' element={<CustomerPage globalAuthId={globalAuthId}/>} />
+            <Route path='/employeePage' element={<EmployeePage globalAuthId={globalAuthId}/>} />
+            <Route path='/courierPage' element={<CourierPage globalAuthId={globalAuthId}/>} />
+            <Route path='/managerPage' element={<ManagerPage globalAuthId={globalAuthId}/>} />
+            <Route path='/userProfile' element={<UserProfile/>} />
+            <Route path='/userShipping' element={<UserShipping globalAuthId={globalAuthId}/>} />
+            <Route path='/userTrackPackage' element={<UserTrackPackage/>} />
+            <Route path='/ecommercePage' element={<ElectronicShop/>} />
+            <Route path='/movePackages' element={<MovePackages globalAuthId={globalAuthId}/>} />
+            <Route path='/reportPage' element={<ReportPage globalAuthId={globalAuthId}/>} />
+            <Route path='/employeesPage' element={<EmployeesPage globalAuthId={globalAuthId}/>} />
+            <Route path='/facilitiesPage' element={<FacilitiesPage globalAuthId={globalAuthId}/>} />
           </Route>
     
         </Routes>

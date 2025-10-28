@@ -6,9 +6,9 @@ import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/AuthButton';
 
 import { useState } from 'react';
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const LogInOrSignUp = ( {setAuth} ) => {
+const LogInOrSignUp = ( {setAuth, setGlobalAccountType, setGlobalAuthId} ) => {
   const [mode, switchMode] = useState("Login"); 
   const [step, setStep] = useState(1)
 
@@ -68,22 +68,20 @@ const LogInOrSignUp = ( {setAuth} ) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    console.log({
-      email,password,phoneNumber,street,city,state,zipCode,firstName,middleName,lastName,accountType
-    });
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
+                                   method: 'POST',
+                                   headers: {'Content-Type': 'application/json' },
+                                   body: JSON.stringify( {email, password, phoneNumber, street, city, state, zipCode, firstName, middleName, lastName, accountType })
+                                  });
+    const data = await response.json();
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/userSignUp`, {
-                                 method: 'POST',
-                                 headers: {'Content-Type': 'application/json' },
-                                 body: JSON.stringify( {email, password, phoneNumber, street, city, state, zipCode, firstName, middleName, lastName, accountType })
-                                });
-  const data = await response.json();
-  if (data.success) {
-    setAuth(true);
-    navigate('/customerPage');
-  } else {
-    alert('Something went wrong with user sign up');
-  }
+    if (data.success) {
+      setAuth(true);
+      setGlobalAuthId(data.auth_id);
+      navigate('/customerPage');
+    } else {
+      alert('Something went wrong with user sign up');
+    }
   };
 
   // function to handle user login, checks if email and password exist in the database
@@ -94,15 +92,31 @@ const LogInOrSignUp = ( {setAuth} ) => {
     // data - convert json code into javascript object
     const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
                                    method: 'POST',
-                                   headers: {'Content-Type': 'application/json' }, 
+                                   headers: {'Content-Type': 'application/json' },
                                    body: JSON.stringify({ email, password })
                                   });
-    const data = await response.json(); 
+    const data = await response.json();
 
     // navigate to home page if success, alert about wrong credentials otherwise
     if (data.success) {
+      // Set all auth state before navigation
+      setGlobalAccountType(data.account_type);
+      setGlobalAuthId(data.auth_id);
       setAuth(true);
-      navigate('/customerPage');
+
+      // send to different page depending on user credentials
+      if (data.account_type === 'individual' || data.account_type === 'prime' || data.account_type === 'business') {
+        navigate('/customerPage');
+      } else if (data.account_type === 'clerk') {
+        navigate('/employeePage');
+      } else if (data.account_type === 'courier') {
+        navigate('/courierPage');
+      } else if (data.account_type === 'manager') {
+        navigate('/managerPage');
+      } else {
+        setAuth(false);
+        alert('Invalid account type when logging in')
+      }
     } else {
       alert('Invalid email or password.');
     }
