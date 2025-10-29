@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const CustomerPage = ( {globalAuthId }) => {
   const [customerInfo, setCustomerInfo] = useState(null);
-
+  const [trackingNumber, setTrackingNumber] = useState('');
   const navigate = useNavigate();
 
   // fetch all info from customer relation in MySQL database
@@ -16,6 +16,17 @@ const CustomerPage = ( {globalAuthId }) => {
     };
     fetchData();
   }, []);
+
+    // Handle tracking submission
+  const handleTrackingSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!trackingNumber.trim()) {
+      alert('Please enter a tracking number');
+      return;
+    }
+    navigate(`/userTrackPackage/${trackingNumber}`);
+  };
 
   if (!customerInfo) return <div>Loading...</div>
 
@@ -31,12 +42,17 @@ const CustomerPage = ( {globalAuthId }) => {
           <div className="nearestPostOffice"> Post Office Near You</div>
         </div>
         <div className="tracker">
-          <b> Tracking ID </b>
-          <form className="customerPageTracker">
-            <input />
-            <button> Track </button>
+          <b>Tracking ID</b>
+          <form className="customerPageTracker" onSubmit={handleTrackingSubmit}>
+            <input 
+              type="text"
+              value={trackingNumber}
+              onChange={(e) => setTrackingNumber(e.target.value)}
+              placeholder="Enter tracking number"
+            />
+            <button type="submit">Track</button>
           </form>
-        </div> 
+        </div>
       </div>
       <div className="quickLinks">
         Quick Links
