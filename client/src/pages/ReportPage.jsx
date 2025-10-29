@@ -6,34 +6,72 @@ const ReportPage = ({ globalAuthId }) => {
   const [loading, setLoading] = useState(false);
   const [reportData, setReportData] = useState(null);
 
-  // Fetch report data when active report changes
+  // Date range states
+  const [backlogStartDate, setBacklogStartDate] = useState('');
+  const [backlogEndDate, setBacklogEndDate] = useState('');
+  const [deliveryStartDate, setDeliveryStartDate] = useState('');
+  const [deliveryEndDate, setDeliveryEndDate] = useState('');
+  const [courierStartDate, setCourierStartDate] = useState('');
+  const [courierEndDate, setCourierEndDate] = useState('');
+
+  // Initialize dates on component mount
+  useEffect(() => {
+    const today = new Date();
+    const startDate = today.toISOString().split('T')[0];
+
+    // All reports: 30 days back for end date
+    const thirtyDaysBack = new Date(today);
+    thirtyDaysBack.setDate(thirtyDaysBack.getDate() - 30);
+    const endDate = thirtyDaysBack.toISOString().split('T')[0];
+
+    setBacklogStartDate(startDate);
+    setBacklogEndDate(endDate);
+    setDeliveryStartDate(startDate);
+    setDeliveryEndDate(endDate);
+    setCourierStartDate(startDate);
+    setCourierEndDate(endDate);
+  }, []);
+
+  // Fetch report data when active report changes or dates change
   useEffect(() => {
     let cancelled = false;
 
     const fetchReportData = async (reportType) => {
+      // Don't fetch if dates aren't initialized yet
+      if (reportType === 'backlog' && (!backlogStartDate || !backlogEndDate)) return;
+      if (reportType === 'delivery' && (!deliveryStartDate || !deliveryEndDate)) return;
+      if (reportType === 'courier' && (!courierStartDate || !courierEndDate)) return;
+
       setLoading(true);
       setReportData(null); // Clear previous data
 
       try {
         let endpoint = '';
+        let url = '';
+
         switch (reportType) {
           case 'problems':
             endpoint = 'getProblemsReport';
+            url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
             break;
           case 'backlog':
             endpoint = 'getFacilityBacklogReport';
+            url = `${import.meta.env.VITE_API_URL}/${endpoint}?startDate=${backlogStartDate}&endDate=${backlogEndDate}`;
             break;
           case 'delivery':
             endpoint = 'getDeliveryTimeReport';
+            url = `${import.meta.env.VITE_API_URL}/${endpoint}?startDate=${deliveryStartDate}&endDate=${deliveryEndDate}`;
             break;
           case 'courier':
             endpoint = 'getCourierPerformanceReport';
+            url = `${import.meta.env.VITE_API_URL}/${endpoint}?startDate=${courierStartDate}&endDate=${courierEndDate}`;
             break;
           default:
             endpoint = 'getProblemsReport';
+            url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
         }
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`);
+        const response = await fetch(url);
         const data = await response.json();
 
         // Only update state if this request wasn't cancelled
@@ -62,7 +100,7 @@ const ReportPage = ({ globalAuthId }) => {
     return () => {
       cancelled = true;
     };
-  }, [activeReport]);
+  }, [activeReport, backlogStartDate, backlogEndDate, deliveryStartDate, deliveryEndDate, courierStartDate, courierEndDate]);
 
   const renderProblemsReport = () => {
     if (!reportData || !reportData.packages) return <div>No data available</div>;
@@ -121,7 +159,27 @@ const ReportPage = ({ globalAuthId }) => {
       <div className="reportContent">
         <div className="reportHeader">
           <h2>Facility Backlog Report</h2>
-          <p>Facilities with package processing backlogs (last 30 days)</p>
+          <p>Facilities with package processing backlogs</p>
+
+          <div className="dateRangeSelector">
+            <div className="dateInput">
+              <label>Start Date:</label>
+              <input
+                type="date"
+                value={backlogStartDate}
+                onChange={(e) => setBacklogStartDate(e.target.value)}
+              />
+            </div>
+            <div className="dateInput">
+              <label>End Date:</label>
+              <input
+                type="date"
+                value={backlogEndDate}
+                onChange={(e) => setBacklogEndDate(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div className="reportStats">
             <div className="statCard">
               <div className="statValue">{reportData.count}</div>
@@ -176,7 +234,27 @@ const ReportPage = ({ globalAuthId }) => {
       <div className="reportContent">
         <div className="reportHeader">
           <h2>Average Delivery Time Report</h2>
-          <p>Delivered packages in the last 90 days</p>
+          <p>Delivered packages</p>
+
+          <div className="dateRangeSelector">
+            <div className="dateInput">
+              <label>Start Date:</label>
+              <input
+                type="date"
+                value={deliveryStartDate}
+                onChange={(e) => setDeliveryStartDate(e.target.value)}
+              />
+            </div>
+            <div className="dateInput">
+              <label>End Date:</label>
+              <input
+                type="date"
+                value={deliveryEndDate}
+                onChange={(e) => setDeliveryEndDate(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div className="reportStats">
             <div className="statCard">
               <div className="statValue">{reportData.stats.average_days}</div>
@@ -238,7 +316,27 @@ const ReportPage = ({ globalAuthId }) => {
       <div className="reportContent">
         <div className="reportHeader">
           <h2>Courier Performance Report</h2>
-          <p>Courier statistics for the last 90 days</p>
+          <p>Courier statistics</p>
+
+          <div className="dateRangeSelector">
+            <div className="dateInput">
+              <label>Start Date:</label>
+              <input
+                type="date"
+                value={courierStartDate}
+                onChange={(e) => setCourierStartDate(e.target.value)}
+              />
+            </div>
+            <div className="dateInput">
+              <label>End Date:</label>
+              <input
+                type="date"
+                value={courierEndDate}
+                onChange={(e) => setCourierEndDate(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div className="reportStats">
             <div className="statCard">
               <div className="statValue">{reportData.count}</div>

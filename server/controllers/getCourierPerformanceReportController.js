@@ -1,10 +1,16 @@
 import pool from '../config/database.js';
 import { badServerRequest } from '../utils/badRequest.js';
+import url from 'url';
 
 export const getCourierPerformanceReportController = async (req, res) => {
   const connection = await pool.getConnection();
 
   try {
+    // Parse query parameters for date range
+    const queryObject = url.parse(req.url, true).query;
+    const endDate = queryObject.endDate;
+    const startDate = queryObject.startDate;
+
     // Get courier performance statistics
     const sql = `
       SELECT
@@ -20,13 +26,13 @@ export const getCourierPerformanceReportController = async (req, res) => {
       FROM employee e
       LEFT JOIN package p ON e.employee_id = p.courier_id
       WHERE e.account_type = 'Courier'
-        AND p.created_at >= DATE_SUB(NOW(), INTERVAL 90 DAY)
+        AND p.created_at BETWEEN ? AND ?
       GROUP BY e.employee_id, courier_name, e.phone_number
       HAVING total_packages > 0
       ORDER BY delivery_rate DESC, delivered_packages DESC
     `;
 
-    const [rows] = await connection.execute(sql);
+    const [rows] = await connection.execute(sql, [endDate, startDate]);
 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');

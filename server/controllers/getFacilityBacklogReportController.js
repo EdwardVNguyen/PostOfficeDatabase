@@ -1,10 +1,16 @@
 import pool from '../config/database.js';
 import { badServerRequest } from '../utils/badRequest.js';
+import url from 'url';
 
 export const getFacilityBacklogReportController = async (req, res) => {
   const connection = await pool.getConnection();
 
   try {
+    // Parse query parameters for date range
+    const queryObject = url.parse(req.url, true).query;
+    const endDate = queryObject.endDate;
+    const startDate = queryObject.startDate;
+
     // Get facility backlog statistics
     const sql = `
       SELECT
@@ -19,15 +25,15 @@ export const getFacilityBacklogReportController = async (req, res) => {
       LEFT JOIN address a ON f.address_id = a.address_id
       LEFT JOIN tracking_event te_in ON f.facility_id = te_in.location_id
         AND te_in.event_type = 'in transit'
-        AND te_in.event_time >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        AND te_in.event_time BETWEEN ? AND ?
       LEFT JOIN tracking_event te_out ON f.facility_id = te_out.location_id
         AND te_out.event_type IN ('out for delivery', 'delivered')
-        AND te_out.event_time >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        AND te_out.event_time BETWEEN ? AND ?
       GROUP BY f.facility_id, f.facility_name, facility_address
       ORDER BY backlog DESC
     `;
 
-    const [rows] = await connection.execute(sql);
+    const [rows] = await connection.execute(sql, [endDate, startDate, endDate, startDate]);
 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');

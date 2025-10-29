@@ -1,10 +1,16 @@
 import pool from '../config/database.js';
 import { badServerRequest } from '../utils/badRequest.js';
+import url from 'url';
 
 export const getDeliveryTimeReportController = async (req, res) => {
   const connection = await pool.getConnection();
 
   try {
+    // Parse query parameters for date range
+    const queryObject = url.parse(req.url, true).query;
+    const endDate = queryObject.endDate;
+    const startDate = queryObject.startDate;
+
     // Get average delivery time statistics
     const sql = `
       SELECT
@@ -21,12 +27,12 @@ export const getDeliveryTimeReportController = async (req, res) => {
       LEFT JOIN address sa ON p.sender_address_id = sa.address_id
       LEFT JOIN address ra ON p.recipient_address_id = ra.address_id
       WHERE p.package_status = 'Delivered'
-        AND p.created_at >= DATE_SUB(NOW(), INTERVAL 90 DAY)
+        AND p.last_updated BETWEEN ? AND ?
       ORDER BY delivery_days DESC
       LIMIT 100
     `;
 
-    const [rows] = await connection.execute(sql);
+    const [rows] = await connection.execute(sql, [endDate, startDate]);
 
     // Calculate average
     let totalDays = 0;
