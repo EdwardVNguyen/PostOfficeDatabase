@@ -12,7 +12,8 @@ import ManagerPage from './pages/ManagerPage';
 import UserProfile from './pages/UserProfile';
 import UserShipping from './pages/UserShipping';
 import UserTrackPackage from './pages/UserTrackPackage';
-import CreateShipment from './pages/CreateShipment';
+import CreatePackage from './pages/CreatePackage';
+import UserCreateShipment from './pages/UserCreateShipment';
 import ElectronicShop from './pages/ElectronicShop';
 import MovePackages from './pages/MovePackages';
 import ReportPage from './pages/ReportPage';
@@ -53,7 +54,7 @@ const App = () => {
         <Routes>
           {/* non-protected routes */}
           <Route path="/" element={<Home/>} />
-          <Route path="/createShipment" element={<CreateShipment/>} />
+          <Route path="/createPackage" element={<CreatePackage />} />
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/support" element={<Support/>} />
@@ -82,6 +83,7 @@ const App = () => {
             <Route path='/reportPage' element={<ReportPage globalAuthId={globalAuthId}/>} />
             <Route path='/employeesPage' element={<EmployeesPage globalAuthId={globalAuthId}/>} />
             <Route path='/facilitiesPage' element={<FacilitiesPage globalAuthId={globalAuthId}/>} />
+            <Route path="/userCreateShipment" element={<UserCreateShipment globalAuthId={globalAuthId}/>} />
           </Route>
     
         </Routes>
