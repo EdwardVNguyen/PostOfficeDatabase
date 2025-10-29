@@ -1,24 +1,24 @@
 import './CustomerPage.css';
-import { useState, useEffect } from 'react'
-import { getCustomerData } from '../utils/getCustomerData.js'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { getCustomerData } from '../utils/getCustomerData.js';
+import { useNavigate } from 'react-router-dom';
 
-const CustomerPage = ( {globalAuthId }) => {
+const CustomerPage = ({ globalAuthId }) => {
   const [customerInfo, setCustomerInfo] = useState(null);
   const [trackingNumber, setTrackingNumber] = useState('');
   const navigate = useNavigate();
 
-  // fetch all info from customer relation in MySQL database
-  useEffect( () => {
+  // Fetch customer data
+  useEffect(() => {
     const fetchData = async () => {
       const data = await getCustomerData(globalAuthId);
       setCustomerInfo(data);
     };
     fetchData();
-  }, []);
+  }, [globalAuthId]);
 
-    // Handle tracking submission
-  const handleTrackingSubmit = async (e) => {
+  // Handle tracking submission
+  const handleTrackingSubmit = (e) => {
     e.preventDefault();
     
     if (!trackingNumber.trim()) {
@@ -28,57 +28,121 @@ const CustomerPage = ( {globalAuthId }) => {
     navigate(`/userTrackPackage/${trackingNumber}`);
   };
 
-  if (!customerInfo) return <div>Loading...</div>
+  if (!customerInfo) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading your dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="customerPageContainer">
-      <h1>Customer Dashboard</h1>
-      <p>Welcome to your SnailMail account! Use the navigation menu above to manage your shipments and packages.</p>
+      {/* Welcome Header */}
+      <div className="welcomeSection">
+        <h1>Welcome back, {customerInfo.customer.first_name}!</h1>
+        <p>Manage your shipments and track packages all in one place.</p>
+      </div>
 
-      <h2>What You Can Do</h2>
-
-      <h3>Your Shipments</h3>
-      <p>Click on "Your Shipments" in the top menu to view all packages you've sent. Create new shipments, print shipping labels, and track the delivery status of your outgoing packages.</p>
-
-      <h3>Tracking</h3>
-      <p>Click on "Tracking" in the top menu to track any package. Enter a tracking number to see real-time updates on location, status, and estimated delivery time.</p>
-
-      <h3>Profile</h3>
-      <p>Click on "Profile" in the top right corner to view and update your personal information, address, and account settings.</p>
-
-      <h3>Support</h3>
-      <p>Click on "Support" in the top menu if you need assistance. Access our help center, contact customer service, and find answers to frequently asked questions.</p>
-
-      <h3>About</h3>
-      <p>Click on "About" to learn more about SnailMail, our services, and our commitment to reliable package delivery.</p>
-
-      <div className="subContainer1">
-        <div className="profile">
-          <div className="profileLeft"> 
-            <b className="icon"> {customerInfo?.customer.first_name}</b>
-            <em className="accountID"> Account ID: {customerInfo?.customer.customer_id}</em>
-            <div className="viewProfile">  View my <span onClick={ () => navigate('/userProfile') }> profile </span> </div>
+      {/* Dashboard Grid */}
+      <div className="dashboardGrid">
+        {/* Profile Card */}
+        <div className="dashboardCard profileCard">
+          <div className="cardHeader">
+            <h2>Your Profile</h2>
           </div>
-          <div className="nearestPostOffice"> Post Office Near You</div>
+          <div className="cardContent">
+            <div className="profileInfo">
+              <div className="customerProfileIcon">
+                {customerInfo.customer.first_name.charAt(0)}{customerInfo.customer.last_name.charAt(0)}
+              </div>
+              <div className="profileDetails">
+                <div className="profileName">
+                  {customerInfo.customer.first_name} {customerInfo.customer.last_name}
+                </div>
+                <div className="profileEmail">{customerInfo.customer.email}</div>
+                <div className="profileId">Account ID: {customerInfo.customer.customer_id}</div>
+              </div>
+            </div>
+            <button 
+              className="actionButton"
+              onClick={() => navigate('/userProfile')}
+            >
+              View Profile
+            </button>
+          </div>
         </div>
-        <div className="tracker">
-          <b>Tracking ID</b>
-          <form className="customerPageTracker" onSubmit={handleTrackingSubmit}>
-            <input 
-              type="text"
-              value={trackingNumber}
-              onChange={(e) => setTrackingNumber(e.target.value)}
-              placeholder="Enter tracking number"
-            />
-            <button type="submit">Track</button>
-          </form>
+
+        {/* Quick Track Card */}
+        <div className="dashboardCard">
+          <div className="cardHeader">
+            <h2>Quick Track</h2>
+          </div>
+          <div className="cardContent">
+            <p>Enter a tracking number to see your package status instantly.</p>
+            <form className="trackForm" onSubmit={handleTrackingSubmit}>
+              <input
+                type="text"
+                className="trackInput"
+                value={trackingNumber}
+                onChange={(e) => setTrackingNumber(e.target.value)}
+                placeholder="Enter tracking number"
+              />
+              <button type="submit" className="trackButton">
+                Track Package
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-      <div className="quickLinks">
-        Quick Links
+
+        {/* Create Shipment Card */}
+        <div className="dashboardCard">
+          <div className="cardHeader">
+            <h2>Create Shipment</h2>
+          </div>
+          <div className="cardContent">
+            <p>Send a new package with just a few clicks. Get your tracking number instantly.</p>
+            <button 
+              className="actionButton"
+              onClick={() => navigate('/userCreateShipment')}
+            >
+              Create New Shipment
+            </button>
+          </div>
+        </div>
       </div>
 
+      {/* Quick Links Section */}
+      <div className="quickLinksSection">
+        <h2>Quick Links</h2>
+        <div className="quickLinksGrid">
+          <div className="quickLinkCard" onClick={() => navigate('/userShipping')}>
+            <div className="quickLinkIcon">📦</div>
+            <h3>Your Shipments</h3>
+            <p>View all packages you've sent</p>
+          </div>
+
+          <div className="quickLinkCard" onClick={() => navigate('/tracking')}>
+            <div className="quickLinkIcon">🔍</div>
+            <h3>Track Package</h3>
+            <p>Track any package with a tracking number</p>
+          </div>
+
+          <div className="quickLinkCard" onClick={() => navigate('/support')}>
+            <div className="quickLinkIcon">💬</div>
+            <h3>Support</h3>
+            <p>Get help and answers</p>
+          </div>
+
+          <div className="quickLinkCard" onClick={() => navigate('/about')}>
+            <div className="quickLinkIcon">ℹ️</div>
+            <h3>About</h3>
+            <p>Learn more about SnailMail</p>
+          </div>
+        </div>
       </div>
+    </div>
   );
 };
 
